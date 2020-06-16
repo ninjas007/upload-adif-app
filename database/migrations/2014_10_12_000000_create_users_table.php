@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('no_hp', 20)->nullable();
             $table->text('alamat')->nullable();
             $table->string('foto', 200)->nullable();
+            $table->integer('role'); // 0 adalah admin 1 adalah member
             $table->timestamps();
         });
     }

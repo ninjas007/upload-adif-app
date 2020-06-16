@@ -14,7 +14,17 @@
                         </div>
                     @endif
 
-                    Upload page
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="adif">File Adif</label>
+                                <input type="file" name="adif" class="form-control" id="adif">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

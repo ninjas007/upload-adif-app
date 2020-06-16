@@ -33,9 +33,17 @@
                     <ul class="navbar-nav mr-auto text-center">
                         @guest
                         @else
-                            <li class="nav-item {{ (request()->is('home')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('login') }}">Home</a></li>
-                            <li class="nav-item {{ (request()->is('profile')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('profile') }}">Profile</a></li>
-                            <li class="nav-item {{ (request()->is('upload')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('upload') }}">Upload File</a></li>
+                            @can('isMember')
+                                <li class="nav-item {{ (request()->is('awards')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('awards') }}">Awards</a></li>
+                                <li class="nav-item {{ (request()->is('profile')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('profile') }}">Profile</a></li>
+                                <li class="nav-item {{ (request()->is('upload')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('upload') }}">Upload File</a></li>
+                            @elsecan('isAdmin')
+                            <li class="nav-item">
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/awards') }}">Awards</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/members') }}">Members</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/setting') }}">Setting</a></li>
+                            </li>
+                            @endcan
                         @endguest
                     </ul>
 
