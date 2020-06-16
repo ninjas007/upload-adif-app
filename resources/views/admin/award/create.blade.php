@@ -12,18 +12,18 @@
                     <form action="{{ route('admin/award-tambah') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="nama">Nama Award</label>
-                                    <input type="text" class="form-control" name="nama" id="nama">
+                                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Contoh : Award Covid 19">
                                 </div>
                                 <div class="form-group">
-                                    <label for="deskripsi">Deskripsi</label>
-                                    <textarea name="deskripsi" id="deskripsi" class="form-control" rows="4"></textarea>
+                                    <label for="url_award">Url Award</label>
+                                    <input type="text" class="form-control" name="url_award" id="url_award" placeholder="Contoh : https://yb6-dxc.net/portfolio/president-bronze-award/">
                                 </div>
                                 <div class="form-group">
                                     <label for="url_gambar">Url Gambar</label>
-                                    <input type="text" class="form-control" name="url_gambar" id="url_gambar">
+                                    <input type="text" class="form-control" name="url_gambar" id="url_gambar" placeholder="Contoh : https://yb6-dxc.net/wp-content/uploads/2020/05/PBA-Award-2.jpg">
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>

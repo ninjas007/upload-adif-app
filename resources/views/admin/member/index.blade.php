@@ -8,14 +8,14 @@
                 <div class="card-header">Member</div>
 
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nama</th>
+                                <th width="10">No</th>
+                                <th width="100">Nama</th>
                                 <th>Alamat</th>
-                                <th>Tanggal Registrasi</th>
-                                <th style="text-align: right;" width="100">Action</th>
+                                <th width="150">Registrasi</th>
+                                <th style="text-align: center;" width="100">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +28,7 @@
                                     <td>{{ $member->name }} <br> {{ $member->no_hp }}</td>
                                     <td>{{ $member->alamat }}</td>
                                     <td>{{ date('d M Y', strtotime($member->created_at)) }}</td>
+                                    <td><a href="" class="btn btn-primary">Update</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

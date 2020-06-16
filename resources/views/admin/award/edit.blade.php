@@ -19,8 +19,8 @@
                                     <input type="text" class="form-control" name="nama" id="nama" value="{{ $award->nama }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="deskripsi">Deskripsi</label>
-                                    <textarea name="deskripsi" id="deskripsi" class="form-control" rows="4">{{ $award->deskripsi }}</textarea>
+                                    <label for="deskripsi">Url Award</label>
+                                    <input type="text" class="form-control" name="url_award" id="url_award" value="{{ $award->url_award }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="url_gambar">Url Gambar</label>

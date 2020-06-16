@@ -9,6 +9,6 @@ class Award extends Model
     protected $table = 'awards';
     
     protected $fillable = [
-    	'uuid', 'nama', 'deskripsi', 'url_gambar'
+    	'uuid', 'nama', 'url_award', 'url_gambar'
     ];
 }

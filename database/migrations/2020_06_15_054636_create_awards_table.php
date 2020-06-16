@@ -17,7 +17,7 @@ class CreateAwardsTable extends Migration
             $table->id();
             $table->string('uuid');
             $table->string('nama', 100);
-            $table->text('deskripsi');
+            $table->text('url_award');
             $table->text('url_gambar');
             $table->timestamps();
         });

@@ -27,6 +27,7 @@ Route::group(['middleware' => ['can:isMember', 'auth']], function() {
 	Route::get('/profile', 'ProfileController@index');
 	Route::put('/profile', 'ProfileController@update')->name('profile');
 	Route::get('/upload', 'UploadController@index')->name('upload');
+   Route::post('/upload', 'UploadController@store')->name('upload');
 });
 
 Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {

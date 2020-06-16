@@ -43,7 +43,6 @@ class AwardController extends Controller
     {
         $rules = [
             'nama' => 'required|max:100',
-            'deskripsi' => 'required',
             'url_gambar' => 'required'
         ];
 
@@ -57,7 +56,7 @@ class AwardController extends Controller
         $award = Award::create([
             'uuid' => Uuid::generate(4),
             'nama' => $request->nama,
-            'deskripsi' => $request->deskripsi,
+            'url_award' => $request->url_award,
             'url_gambar' => $request->url_gambar,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),

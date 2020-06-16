@@ -16,6 +16,7 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "phpmailer/phpmailer": "^6.1",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {

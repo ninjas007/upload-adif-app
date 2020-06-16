@@ -15,8 +15,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware(['auth','verified']);
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
+        // $this->middleware('auth');
     }
 
     /**
@@ -26,9 +26,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->id == 1) {
+        if (Auth::user()->id == 0) {
             return redirect('admin/awards');    
-        } else {
+        }
+        
+        if(Auth::user()->id == 1){
             return redirect('awards');
         }
     }
