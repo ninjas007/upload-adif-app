@@ -47,8 +47,7 @@ class SettingController extends Controller
 
         // jika validasinya ada yang tidak terpenuhi
         if ($validator->fails()) {
-            $messages = $validator->messages()->get('*');
-            return redirect('admin/setting')->with('error', $messages);
+            return redirect('admin/setting')->withErrors($validator->errors());
         }
 
         $admin = User::findOrFail(Auth::user()->id);

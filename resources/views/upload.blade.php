@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Upload</div>
+                <div class="card-header text-white bg-primary font-weight-bold">Upload</div>
                 <div class="card-body">
                     <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
                         @csrf 

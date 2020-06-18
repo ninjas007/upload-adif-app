@@ -4,21 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
 use Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth','verified']);
-        // $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -26,11 +16,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->id == 0) {
+        $user = User::where('id', Auth::user()->id)->first();
+
+        if ($user->role == 0) {
             return redirect('admin/awards');    
         }
         
-        if(Auth::user()->id == 1){
+        if($user->role == 1){
             return redirect('awards');
         }
     }

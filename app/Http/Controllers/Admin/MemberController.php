@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\UserAward;
+use App\Award;
 use App\User;
+use Validator;
+use Auth;
 
 class MemberController extends Controller
 {
@@ -37,20 +41,32 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
-    }
+        $userAward = UserAward::where('user_id', $id);
+        $userAward->delete();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        // jika ada inputan yang di set
+        if (isset($request->award_id)) {
+            $rows = count($request->award_id);
+
+            for ($i = 0; $i < $rows; $i++) {
+                // jika form inputan kosong, abaikan
+                if (is_null($request->post('link_googledrive')[$i])) {
+                   continue;
+                }
+               
+                $data[] = [
+                   'award_id' => $request->post('award_id')[$i],
+                   'user_id' => $id,
+                   'link_googledrive' => $request->post('link_googledrive')[$i]
+                ];
+            }
+            
+            UserAward::insert($data);
+        }
+
+        return redirect('admin/members');
     }
 
     /**
@@ -59,31 +75,12 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function view($id)
     {
-        //
-    }
+        $data['id'] = $id;
+        $data['awards'] = Award::get();
+        $data['userAwards'] = UserAward::where('user_id', $id)->get();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return view('admin.member.update', $data);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-}
+}   

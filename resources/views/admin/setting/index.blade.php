@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Setting</div>
+                <div class="card-header text-white bg-danger font-weight-bold">Setting</div>
                 <div class="card-body">
                     <form action="{{ route('admin/setting') }}" method="POST">
                         @method('PUT')
@@ -20,6 +20,28 @@
                                     <label for="email">Email</label>
                                     <input type="email" name="email" id="email" class="form-control" value="{{ $admin->email }}">
                                 </div>
+                            </div>
+                            <div class="col-md-6 pt-md-4">
+                                @if(session()->has('success'))
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                      {{ session()->get('success') }}
+                                    </div>
+                                @endif
+                                @if(session()->has('error'))
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                      {{ session()->get('error') }}
+                                    </div>
+                                @endif
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $error)
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                          {{ $error }}
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                         <div class="row">

@@ -39,7 +39,7 @@ class UploadController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect('upload')->with('error', 'File upload tidak boleh kosong');
+            return redirect('upload')->with('error', 'File upload required');
         }
 
         $user = User::where('id', Auth::user()->id)->first();
@@ -73,7 +73,7 @@ class UploadController extends Controller
             $mail->addAttachment($attachment);
 
             // Content
-            $mail->isHTML('Berhasil');
+            $mail->isHTML('Success');
             $mail->Subject = 'File Adif';
             $mail->Body    = 'File Adif Member 
                                 <br> <b> Nama : '.$user->name.'</b>
@@ -84,11 +84,11 @@ class UploadController extends Controller
 
             Storage::delete('public/adif/'.$fileName);
 
-            return redirect('upload')->with('success', 'Berhasil mengirim file');
+            return redirect('upload')->with('success', 'Success sent email');
             
         } catch (Exception $e) {
 
-            return redirect('upload')->with('error', 'Gagal mengirim file. silahkan contact admin');
+            return redirect('upload')->with('error', 'Failed sent email. contact us');
         }
     }
 }

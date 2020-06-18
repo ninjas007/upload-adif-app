@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Member</div>
+                <div class="card-header text-white bg-danger font-weight-bold">Member</div>
 
                 <div class="card-body">
                     <table class="table table-bordered">
@@ -15,7 +15,7 @@
                                 <th width="100">Nama</th>
                                 <th>Alamat</th>
                                 <th width="150">Registrasi</th>
-                                <th style="text-align: center;" width="100">Action</th>
+                                <th style="text-align: center;" width="100">Award</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,15 +26,18 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $member->name }} <br> {{ $member->no_hp }}</td>
-                                    <td>{{ $member->alamat }}</td>
+                                    <td>{{ ($member->alamat == null) ? '-' : $member->alamat }}</td>
                                     <td>{{ date('d M Y', strtotime($member->created_at)) }}</td>
-                                    <td><a href="" class="btn btn-primary">Update</a></td>
+                                    <td align="center">
+                                        <a href="/admin/member/award-update/{{ $member->id }}" class="btn btn-success btn-sm">Update</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
+                    {{ $members->links() }}
                 </div>
             </div>
         </div>

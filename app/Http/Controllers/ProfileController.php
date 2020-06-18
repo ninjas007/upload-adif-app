@@ -48,15 +48,14 @@ class ProfileController extends Controller
 
         // jika validasinya ada yang tidak terpenuhi
         if ($validator->fails()) {
-            $messages = $validator->messages()->get('*');
-            return redirect('profile')->with('error', $messages);
+            return redirect('profile')->withErrors($validator->errors());
         }
 
         $user = User::where('email', $request->email)->first();
 
         // jika ada email yg sama
         if (!empty($user) && $user->id != Auth::user()->id) {
-           return redirect('profile')->with('error', 'Email ini sudah terdaftar');
+           return redirect('profile')->with('error', 'Email already exist');
         }
 
         $user = User::findOrFail(Auth::user()->id);
@@ -82,7 +81,7 @@ class ProfileController extends Controller
 
         if (!is_null($request->password_lama) && !is_null($request->password_baru)) {
             if (Hash::check($request->password_lama, $user->password) == false) {
-                return redirect('profile')->with('error', 'Password lama tidak sesuai');
+                return redirect('profile')->with('error', 'Old password not match');
             }
 
             $user->password = Hash::make($request->password_baru);
@@ -94,7 +93,7 @@ class ProfileController extends Controller
             Storage::delete('public/foto/'.$fotoLama);
         }
         
-        return redirect('profile');
+        return redirect('profile')->with('success', 'Success update profile');
     }
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Award;
+use App\UserAward;
 use Validator;
 use Uuid;
 
@@ -18,7 +19,7 @@ class AwardController extends Controller
      */
     public function index()
     {
-        $awards = Award::paginate(5);
+        $awards = Award::paginate(10);
 
         return view('admin.award.index', compact('awards'));
     }
@@ -49,8 +50,7 @@ class AwardController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            $messages = $validator->messages()->get('*');
-            return redirect('admin/tambah')->with('error', $messages);
+            return redirect('admin/awards/tambah')->withErrors($validator->errors());
         }
 
         $award = Award::create([
@@ -103,17 +103,13 @@ class AwardController extends Controller
     {
         $rules = [
             'nama' => 'required|max:100',
-            'deskripsi' => 'required',
             'url_gambar' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            $messages = $validator->messages()->get('*');
-            echo 'string';
-            die();
-            return redirect('admin/awards/ubah/'.$uuid.'')->with('error', $messages);
+            return redirect('admin/awards/ubah/'.$uuid.'')->withErrors($validator->errors());
         }
 
         $award = Award::where('uuid', $uuid)->first();
@@ -121,7 +117,7 @@ class AwardController extends Controller
 
         $award->uuid = $uuid;
         $award->nama = $request->nama;
-        $award->deskripsi = $request->deskripsi;
+        $award->url_award = $request->url_award;
         $award->url_gambar = $request->url_gambar;
         $award->updated_at = date('Y-m-d H:i:s');
 
@@ -139,6 +135,11 @@ class AwardController extends Controller
     public function destroy($id)
     {
         $award = Award::findOrFail($id);
+        $userAward = UserAward::where('award_id', $id)->first();
+
+        if ($userAward) {
+            return redirect('admin/awards')->with('error', 'Award ini memiliki relasi dengan user. Tidak dapat dihapus!');
+        }
 
         $award->delete();
 

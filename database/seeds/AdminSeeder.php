@@ -23,14 +23,14 @@ class AdminSeeder extends Seeder
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        DB::table('users')->insert([
-            'name' => 'Tilis Tiadi',
-            'email' => 'tiliztiadi@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 1,
-            'foto' => 'profile.jpg',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+        // DB::table('users')->insert([
+        //     'name' => 'Tilis Tiadi',
+        //     'email' => 'tiliztiadi@gmail.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 1,
+        //     'foto' => 'profile.jpg',
+        //     'created_at' => date('Y-m-d H:i:s'),
+        //     'updated_at' => date('Y-m-d H:i:s')
+        // ]);
     }
 }

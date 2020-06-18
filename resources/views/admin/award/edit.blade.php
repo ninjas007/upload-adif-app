@@ -5,11 +5,23 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Award</div>
+                <div class="card-header text-white bg-danger font-weight-bold">Award</div>
 
                 <div class="card-body">
                     <a href="{{ route('admin/awards') }}" class="btn btn-danger mb-3">Kembali</a>
-                    <form action="/admin/awards/ubah/{{ $award->uuid }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if ($errors->any())
+                                @foreach ($errors->all() as $error)
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                      {{ $error }}
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                    <form action="/admin/award/ubah/{{ $award->uuid }}" method="POST">
                         @method('PUT')
                         @csrf
                         <div class="row">

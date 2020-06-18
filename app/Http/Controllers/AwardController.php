@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use App\Award;
+use App\UserAward;
 
 class AwardController extends Controller
 {
@@ -16,9 +17,10 @@ class AwardController extends Controller
      */
     public function index()
     {
-        $awards = Award::paginate(5);
+        $awards = Award::paginate(10);
+        $userAwards = UserAward::where('user_id', Auth::user()->id)->get();
 
-        return view('award', compact('awards'));
+        return view('award', compact('awards', 'userAwards'));
     }
 
 

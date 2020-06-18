@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- Custom --}}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,8 +20,21 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        div#preloader {
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 99999;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+          background: #fff url('image/preloader.gif') no-repeat center center;
+        }
+    </style>
 </head>
 <body>
+    <div id="preloader"></div>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -30,7 +45,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto text-center">
+                    <ul class="navbar-nav mr-auto text-center py-3">
                         @guest
                         @else
                             @can('isMember')
@@ -48,7 +63,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto text-center">
+                    <ul class="navbar-nav ml-auto text-center py-3">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -87,5 +102,8 @@
             @yield('content')
         </main>
     </div>
+    <script type="text/Javascript">
+        $('#preloader').fadeOut('slow');
+    </script>
 </body>
 </html>

@@ -5,22 +5,41 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Profile</div>
+                <div class="card-header text-white bg-primary font-weight-bold">Profile</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    <div class="row">
+                        <div class="col-md-12 pt-md-4">
+                            @if(session()->has('success'))
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                  {{ session()->get('success') }}
+                                </div>
+                            @endif
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                  {{ session()->get('error') }}
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                @foreach ($errors->all() as $error)
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                      {{ $error }}
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
-                    @endif
-
+                    </div>
+                    
                     <form method="POST" action="{{ route('profile') }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                              <label for="nama">Nama</label>
+                              <label for="nama">Name</label>
                               <input type="text" class="form-control" name="nama" id="nama" placeholder="Contoh : John Doe" value="{{ $user->name }}">
                             </div>
                             <div class="form-group">
@@ -28,11 +47,11 @@
                               <input type="email" class="form-control" name="email" id="email" placeholder="Contoh : johndoe@gmail.com" value="{{ $user->email }}">
                             </div>
                             <div class="form-group">
-                              <label for="no_hp">No Hp</label>
+                              <label for="no_hp">Phone / WA</label>
                               <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="Contoh : 081234XXXX" value="{{ $user->no_hp }}">
                             </div>
                             <div class="form-group">
-                              <label for="alamat">Alamat</label>
+                              <label for="alamat">Address</label>
                               <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control" style="resize: none;">{{ $user->alamat }}</textarea>
                             </div>
                         </div>
@@ -49,11 +68,11 @@
                         <div class="col-md-12"><p class="font-weight-bold">Change Password</p></div>
                         <div class="col-md-8">
                             <div class="form-group">
-                              <label for="password_lama">Password Lama</label>
+                              <label for="password_lama">Old Password</label>
                               <input type="password" class="form-control" name="password_lama" id="password_lama">
                             </div>
                             <div class="form-group">
-                              <label for="password_baru">Password Baru</label>
+                              <label for="password_baru">New Password</label>
                               <input type="password" class="form-control" name="password_baru" id="password_baru">
                             </div>
                         </div>
