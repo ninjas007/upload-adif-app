@@ -88,15 +88,22 @@
                         @endforeach
                     </select>
                 </td>
-                <td><input type="text" name="link_googledrive[]" class="form-control" placeholder="Link google drive award untuk diakses member" required></td>
+                <td><input type="text" name="link_googledrive[]" class="form-control hapus" placeholder="Link google drive award untuk diakses member" required></td>
                 <td><button type="button" class="btn btn-danger btn-sm hapus">x</button></td>
             </tr>
         `)
+
+        hapus()
     }
 
-    $('.hapus').click(function(){
-        $(this).parent().parent().remove()
-    })
+    function hapus() {
+        $('.hapus').click(function(){
+            $(this).parent().parent().remove()
+        })    
+    }
+
+    hapus()
+    
 </script>
 @endsection
 
