@@ -42,14 +42,20 @@ class UploadController extends Controller
             return redirect('upload')->with('error', 'File upload required');
         }
 
-        $user = User::where('id', Auth::user()->id)->first();
-        
         $file = $request->file('adif');
         $fileName = time() . $file->getClientOriginalName();
-        
+
+        $explode = explode('.',$fileName);
+
+        if (end($explode) != 'adi') {
+            return redirect('upload')->with('error', 'Upload file .adi');
+        }
+
         $path = $file->storeAs('public/adif', $fileName);
         $attachment = storage_path('app/public/adif/'.$fileName);
 
+        $user = User::where('id', Auth::user()->id)->first();
+        
         $mail = new PHPMailer(true);
 
         try {
@@ -74,11 +80,12 @@ class UploadController extends Controller
 
             // Content
             $mail->isHTML('Success');
-            $mail->Subject = 'File Adif';
+            $mail->Subject = 'Member YB6DX';
             $mail->Body    = 'File Adif Member 
                                 <br> <b> Nama : '.$user->name.'</b>
                                 <br> <b> No Hp : '.$user->no_hp.'</b>
-                                <br> <b> Alamat : '.$user->alamat.'</b>';
+                                <br> <b> Alamat : '.$user->alamat.'</b>
+                                <br> <b> Kategori Member : '.strtoupper($user->category).'</b>';
 
             $mail->send();
 

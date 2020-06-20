@@ -29,7 +29,7 @@
           width: 100%;
           height: 100%;
           overflow: visible;
-          background: #fff url('preloader.gif') no-repeat center center;
+          background: #fff url('/preloader.gif') no-repeat center center;
         }
     </style>
 </head>

@@ -16,7 +16,7 @@
                                     <input type="file" name="adif" class="form-control" id="adif" accept=".adi">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit" id="submit">
                                 </div>
                             </div>
                             <div class="col-md-6 pt-md-4">
@@ -40,4 +40,9 @@
         </div>
     </div>
 </div>
+<script type="text/Javascript">
+    $('#submit').click(function(){
+        $(this).addClass('disabled')
+    })
+</script>
 @endsection
