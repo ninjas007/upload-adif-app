@@ -39,7 +39,10 @@ class UploadController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect('upload')->with('error', 'File upload required');
+            return response([
+                'msg' => 'File upload required',
+                'status' => http_response_code(400)
+            ], 400);
         }
 
         $file = $request->file('adif');
@@ -48,7 +51,10 @@ class UploadController extends Controller
         $explode = explode('.',$fileName);
 
         if (end($explode) != 'adi') {
-            return redirect('upload')->with('error', 'Upload file .adi');
+            return response([
+                'msg' => 'Upload file .adi',
+                'status' => 400
+            ], 400);
         }
 
         $path = $file->storeAs('public/adif', $fileName);
@@ -91,11 +97,17 @@ class UploadController extends Controller
 
             Storage::delete('public/adif/'.$fileName);
 
-            return redirect('upload')->with('success', 'Success sent email');
+            return response([
+                'msg' => 'File for a successful award claim, please wait while in progress',
+                'status' => 200
+            ], 200);
             
         } catch (Exception $e) {
 
-            return redirect('upload')->with('error', 'Failed sent email. contact us');
+            return response([
+                'msg' => 'sent email failed, try again',
+                'status' => 500
+            ], 500);
         }
     }
 }

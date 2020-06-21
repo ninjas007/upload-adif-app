@@ -94,6 +94,7 @@
             @yield('content')
         </main>
     </div>
+    @yield('js')
     <script type="text/Javascript">
         $('#preloader').fadeOut('slow');
     </script>

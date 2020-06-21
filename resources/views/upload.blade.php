@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header text-white bg-primary font-weight-bold">Upload</div>
                 <div class="card-body">
-                    <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data" id="upload_form">
                         @csrf 
                         <div class="row">
                             <div class="col-md-6">
@@ -16,22 +16,10 @@
                                     <input type="file" name="adif" class="form-control" id="adif" accept=".adi">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Submit" id="submit">
+                                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
                                 </div>
                             </div>
-                            <div class="col-md-6 pt-md-4">
-                                @if(session()->has('success'))
-                                    <div class="alert alert-success alert-dismissible" role="alert">
-                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                      {{ session()->get('success') }}
-                                    </div>
-                                @endif
-                                @if(session()->has('error'))
-                                    <div class="alert alert-danger alert-dismissible" role="alert">
-                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                      {{ session()->get('error') }}
-                                    </div>
-                                @endif
+                            <div class="col-md-6 pt-md-4 message">
                             </div>
                         </div>
                     </form>
@@ -40,9 +28,44 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
 <script type="text/Javascript">
-    $('#submit').click(function(){
-        $(this).addClass('disabled')
+    $(document).ready(function(){
+        $('#upload_form').on('submit', function(event){
+            event.preventDefault();
+            $.ajax({
+                url: "{{ route('upload-file') }}",
+                method: 'POST',
+                data: new FormData(this),
+                datatype: 'html',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function(){
+                    $('#submit').addClass('disabled');
+                    $('#preloader').css('opacity', 0.3);
+                    $('#preloader').fadeIn('slow');
+                },
+                success: function(data) {
+                    $('.message').html(` <div class="alert alert-success alert-dismissible" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    ${data.msg}
+                                </div>`)
+
+                    $('#submit').removeClass('disabled');
+                    $('#preloader').fadeOut('slow');
+                },
+                error: function(data){
+                    $('.message').html(` <div class="alert alert-danger alert-dismissible" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    ${data.responseJSON.msg}
+                                </div>`)
+                    $('#submit').removeClass('disabled');
+                    $('#preloader').fadeOut('slow');
+                }
+            })
+        })
     })
 </script>
 @endsection
