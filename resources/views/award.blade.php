@@ -11,9 +11,9 @@
                         <thead>
                             <tr>
                                 <th width="10">#</th>
-                                <th>Award Name</th>
-                                <th width="250">Status</th>
-                                <th width="50" class="text-center">Download</th>
+                                <th>CLAIM AWARDS</th>
+                                <th width="250">CLAIM STATUS</th>
+                                <th width="50" class="text-center">DOWNLOAD</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,15 +23,15 @@
                                     <td><a href="{{ $award->url_award }}" title="Klik untuk melihat award" target="_blank">{{ $award->nama }}</a></td>
                                     @if (count($userAwards) == 0)
                                         <td>Process / Unclaimed</td>
-                                        <td class="text-center"><a href="#" title="Klik untuk mendownload award" class="btn btn-primary btn-sm">Download</a></td>
+                                        <td class="text-center"><a href="#" title="Klik untuk mendownload award" class="btn btn-primary btn-sm disabled">DOWNLOAD</a></td>
                                     @endif
                                     @foreach ($userAwards as $user_award)
                                         @if ($award->id == $user_award->award_id)
                                             <td>Success</td>
-                                            <td class="text-center"><a href="{{ $user_award->link_googledrive }}" title="Klik untuk mendownload award" class="btn btn-primary btn-sm" disabled target="_blank">Download</a></td>
+                                            <td class="text-center"><a href="{{ $user_award->link_googledrive }}" title="Klik untuk mendownload award" class="btn btn-primary btn-sm" disabled target="_blank">DOWNLOAD</a></td>
                                         @else
                                             <td>Process / Unclaimed</td>
-                                            <td class="text-center"><a href="#" title="Klik untuk mendownload award" class="btn btn-primary btn-sm">Download</a></td>
+                                            <td class="text-center"><a href="#" title="Klik untuk mendownload award" class="btn btn-primary btn-sm disabled">DOWNLOAD</a></td>
                                         @endif
                                     @endforeach
                                 </tr>

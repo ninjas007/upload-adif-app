@@ -14,15 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function(){
-	return view('welcome');
+   return view('welcome');
 });
 
 Auth::routes();
-Auth::routes(['verify' => true]);
+Auth::routes([
+   'register' => false
+]);
+
+Route::get('register', function(){
+   return redirect('/');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['can:isMember', 'auth', 'verified']], function() {
+Route::group(['middleware' => ['can:isMember', 'auth']], function() {
 	Route::get('/awards', 'AwardController@index')->name('awards');
 	Route::get('/profile', 'ProfileController@index');
 	Route::put('/profile', 'ProfileController@update')->name('profile');
@@ -43,6 +49,11 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
 
    	// admin member
    	Route::get('admin/members', 'Admin\MemberController@index')->name('admin/members');
+      Route::get('admin/member/tambah', 'Admin\MemberController@create')->name('admin/member-tambah');
+      Route::post('admin/member/tambah', 'Admin\MemberController@tambah')->name('admin/member-tambah');
+      Route::get('admin/member/edit/{id}', 'Admin\MemberController@edit');
+      Route::put('admin/member/update', 'Admin\MemberController@updateUser')->name('admin/member/update');
+      Route::get('admin/member/hapus/{id}', 'Admin\MemberController@destroy');
       Route::get('admin/member/award-update/{id}', 'Admin\MemberController@view');
       Route::post('admin/member/award-store/{id}', 'Admin\MemberController@store');
       Route::get('admin/member/award-ubah/{id}', 'Admin\MemberController@ubah');

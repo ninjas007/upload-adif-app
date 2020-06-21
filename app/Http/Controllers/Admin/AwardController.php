@@ -50,7 +50,7 @@ class AwardController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect('admin/awards/tambah')->withErrors($validator->errors());
+            return redirect('admin/award/tambah')->withErrors($validator->errors());
         }
 
         $award = Award::create([

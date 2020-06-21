@@ -18,12 +18,7 @@
                     <div class="card-body">
                         <a href="{{ url('/') }}"><img src="https://yb6-dxc.net/wp-content/uploads/2019/08/gbr-1.jpg" class="img-fluid" alt="logo-yb6dxc"></a>
                         <ul class="nav nav-tabs py-3 border-0 nav-justified">
-                          <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('login') }}">Login</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Register</a>
-                          </li>
+                          <li class="nav-item"><h3>LOGIN</h3></li>
                         </ul>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
@@ -68,18 +63,21 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row mb-0">
+                            <div class="form-group row mb-2">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Login') }}
                                     </button>
-
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
+                                    <a href="https://yb6-dxc.net/membership/" target="_blank" class="btn btn-primary">Register</a>                                   
                                 </div>
+                            </div>
+                            
+                            <div class="form-group text-center pl-3">
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
                         </form>
                     </div>

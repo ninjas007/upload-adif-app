@@ -57,6 +57,10 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                              <label for="">Callsign</label>
+                              <input type="text" class="form-control" value="{{ $user->callsign }}" disabled>
+                            </div>
+                            <div class="form-group">
                                 <img src="{{ asset('/storage/foto/'.$user->foto) }}" width="200" height="200" class="img-fluid py-4">
                             </div>
                             <div class="form-group">
