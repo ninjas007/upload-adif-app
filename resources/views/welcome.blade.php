@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row justify-content-center mt-4">
                 <div class="col-md-12 mb-5">
-                    <img src="https://yb6-dxc.net/wp-content/uploads/2020/06/sildenews1.jpg" class="img-fluid" alt="">
+                    <img src="https://yb6-dxc.net/wp-content/uploads/2020/06/sildenews1.jpg" class="img-fluid" alt="Image">
                 </div>
                 <div class="col-md-12 text-center mb-2">
                     @if (Route::has('login'))

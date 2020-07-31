@@ -25,6 +25,13 @@
                                     <label for="url_gambar">Url Gambar</label>
                                     <input type="text" class="form-control" name="url_gambar" id="url_gambar" placeholder="Cth: https://yb6-dxc.net/wp-content/uploads/2020/05/PBA-Award-2.jpg">
                                 </div>
+                                <div class="form-group">
+                                    <label for="category_award">Category Award</label>
+                                    <select name="category_award" id="category_award" class="form-control">
+                                    	<option value="free">Free</option>
+                                    	<option value="premium">Premium</option>
+                                    </select>
+                                </div>
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
                             <div class="col-md-6 pt-md-4">                                

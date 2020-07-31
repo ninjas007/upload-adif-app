@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAwardsTable extends Migration
+class CreateBannersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateAwardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('awards', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
-            $table->string('nama', 100);
-            $table->string('category', 10);
-            $table->text('url_award')->nullable();
-            $table->text('url_gambar');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateAwardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('awards');
+        Schema::dropIfExists('banners');
     }
 }

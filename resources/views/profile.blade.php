@@ -37,6 +37,9 @@
                     @method('PUT')
                     @csrf
                     <div class="row">
+                    	<div class="col-md-12 text-center">
+                        	<h4 class="text-primary"><b>MEMBER {{ strtoupper($user->category) }}</b></h4>
+                        </div>
                         <div class="col-md-8">
                             <div class="form-group">
                               <label for="nama">Name</label>
@@ -59,6 +62,15 @@
                             <div class="form-group">
                               <label for="">Callsign</label>
                               <input type="text" class="form-control" value="{{ $user->callsign }}" disabled>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Member Id</label>
+                              @if ($user->category == 'premium')
+                              	<input type="text" class="form-control" value="YB6_DXCom#{{ substr($user->member_id, -3) }}" disabled>
+                              @endif
+                              @if ($user->category == 'free')
+                              	<input type="text" class="form-control" value="#BSC{{ substr($user->member_id, -3) }}" disabled>
+                              @endif
                             </div>
                             <div class="form-group">
                                 <img src="{{ asset('/storage/foto/'.$user->foto) }}" width="200" height="200" class="img-fluid py-4">

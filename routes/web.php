@@ -26,8 +26,9 @@ Route::get('register', function(){
    return redirect('/');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('send-mail', 'UploadController@mail');
 
+Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['can:isMember', 'auth']], function() {
 	Route::get('/awards', 'AwardController@index')->name('awards');
 	Route::get('/profile', 'ProfileController@index');
@@ -51,6 +52,7 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
    	Route::get('admin/members', 'Admin\MemberController@index')->name('admin/members');
       Route::get('admin/member/tambah', 'Admin\MemberController@create')->name('admin/member-tambah');
       Route::post('admin/member/tambah', 'Admin\MemberController@tambah')->name('admin/member-tambah');
+      Route::get('admin/member/detail', 'Admin\MemberController@show');
       Route::get('admin/member/edit/{id}', 'Admin\MemberController@edit');
       Route::put('admin/member/update', 'Admin\MemberController@updateUser')->name('admin/member/update');
       Route::get('admin/member/hapus/{id}', 'Admin\MemberController@destroy');
@@ -62,4 +64,12 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
    	// admin setting
    	Route::get('admin/setting', 'Admin\SettingController@index')->name('admin/setting');
    	Route::put('admin/setting', 'Admin\SettingController@update')->name('admin/setting'); 
+
+      // admin award
+      Route::get('admin/banners', 'Admin\BannerController@index')->name('admin/banners');
+//       Route::get('admin/award/tambah', 'Admin\AwardController@create')->name('admin/award-tambah');
+//       Route::post('admin/award/tambah', 'Admin\AwardController@store')->name('admin/award-tambah');
+//       Route::get('admin/award/ubah/{uuid}', 'Admin\AwardController@edit');
+//       Route::put('admin/award/ubah/{uuid}', 'Admin\AwardController@update');
+//       Route::get('admin/award/hapus/{id}', 'Admin\AwardController@destroy');
 });

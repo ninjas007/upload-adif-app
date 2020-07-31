@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -26,12 +30,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <a href="{{ route('admin/award-tambah') }}" class="btn btn-success mb-3">Tambah Award</a>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="myTable">
                                 <thead>
                                     <tr>
-                                        <th width="10">No</th>
-                                        <th>Nama Award</th>
-                                        <th>Gambar</th>
+                                        <th>Award</th>
+                                        <th>Category</th>
+                                        <th>Image</th>
                                         <th width="180" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -39,12 +43,12 @@
                                     @if (count($awards) == 0)
                                         <tr><td colspan="5" style="text-align: center;">Belum ada data</td></tr>
                                     @endif
-                                    @foreach ($awards as $key => $award)
+                                    @foreach ($awards as $award)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
                                             <td>
                                                 <a href="{{ $award->url_award }}" title="Klik untuk melihat award" target="_blank">{{ $award->nama }}</a>
                                             </td>
+                                            <td>{{ strtoupper($award->category) }}</td>
                                             <td><img src="{{ $award->url_gambar }}" width="100"></td>
                                             <td class="text-center">
                                                 <a href="/admin/award/ubah/{{ $award->uuid }}" class="btn btn-sm btn-primary">Ubah</a>
@@ -57,11 +61,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    {{ $awards->links() }}
-                </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/Javascript">
+    $(document).ready( function () {
+        $.noConflict();
+        $('#myTable').DataTable();
+    } );
+</script>
 @endsection

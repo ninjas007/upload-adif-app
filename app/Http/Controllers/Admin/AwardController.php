@@ -19,7 +19,7 @@ class AwardController extends Controller
      */
     public function index()
     {
-        $awards = Award::paginate(10);
+        $awards = Award::all();
 
         return view('admin.award.index', compact('awards'));
     }
@@ -58,6 +58,7 @@ class AwardController extends Controller
             'nama' => $request->nama,
             'url_award' => $request->url_award,
             'url_gambar' => $request->url_gambar,
+            'category' => $request->category_award,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
@@ -119,6 +120,7 @@ class AwardController extends Controller
         $award->nama = $request->nama;
         $award->url_award = $request->url_award;
         $award->url_gambar = $request->url_gambar;
+        $award->category = $request->category_award;
         $award->updated_at = date('Y-m-d H:i:s');
 
         $award->save();

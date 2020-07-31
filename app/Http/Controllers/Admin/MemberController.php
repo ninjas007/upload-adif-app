@@ -22,7 +22,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = User::where('role', 1)->paginate(5);
+        $members = User::where('role', 1)->get();
 
         return view('admin.member.index', compact('members'));
     }
@@ -38,6 +38,18 @@ class MemberController extends Controller
     }
 
     /**
+     * Show members
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $data['user'] = User::where('id', $request->input('id'))->first();
+
+        return view('admin/member/detail', $data);
+    }
+
+    /**
      * Tambah data user
      * 
      * @param  \Illuminate\Http\Request  $request
@@ -50,7 +62,8 @@ class MemberController extends Controller
             'email' => 'required|string|max:255|unique:users',
             'callsign' => 'required|string|min:4|max:10|unique:users',
             'password' => 'required|string|min:8',
-            'category' => 'required|string'
+            'category' => 'required|string',
+            'member_id' => 'required|string|max:20'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -60,6 +73,7 @@ class MemberController extends Controller
         }
 
         $user = User::create([
+        	'member_id' => strtoupper($request->member_id),
             'name' => $request->nama,
             'email' => $request->email,
             'callsign' => $request->callsign,
@@ -67,13 +81,14 @@ class MemberController extends Controller
             'category' => $request->category,
             'role' => 1,
             'foto' => 'profile.jpg',
+            'register' => $request->register,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         $user->save();
 
-        return redirect('admin/members')->with('success', 'Berhasil menambah member');
+        return redirect('admin/members')->with('success', 'Berhasil menambah member')->with('user');
     }
 
     /**
@@ -138,7 +153,8 @@ class MemberController extends Controller
             'nama' => 'required|string|max:100',
             'email' => 'required|string|max:255',
             'callsign' => 'required|string|min:4|max:10',
-            'category' => 'required|string'
+            'category' => 'required|string',
+            'member_id' => 'required|string|max:20'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -148,10 +164,12 @@ class MemberController extends Controller
         }
 
         $user = User::findOrFail($request->id);
+        $user->member_id = strtoupper($request->member_id);
         $user->name = $request->nama;
         $user->email = $request->email;
         $user->callsign = $request->callsign;
         $user->category = $request->category;
+        $user->register = $request->register;
         $user->updated_at = date('Y-m-d H:i:s');
 
         if ($request->password != '') {
@@ -170,6 +188,10 @@ class MemberController extends Controller
 
         if (count($userAwards) > 0) {
             DB::table('user_awards')->where('user_id', $id)->delete();
+        }
+
+        if ($user->foto != 'profile.jpg') {
+            Storage::delete('public/foto/'.$user->foto);
         }
 
         $user->delete();

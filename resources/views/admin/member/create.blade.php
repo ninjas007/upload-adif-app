@@ -26,11 +26,19 @@
                                     <input type="text" class="form-control" name="callsign" id="callsign" placeholder="Callsign">
                                 </div>
                                 <div class="form-group">
+                            	    <label for="member_id">Member Id</label>
+                            	    <input type="text" class="form-control" name="member_id" id="member_id" placeholder="Member Id">
+                            	</div>
+                                <div class="form-group">
                                     <label for="category">Kategori</label>
                                     <select name="category" id="category" class="form-control">
                                         <option value="free">Free</option>
                                         <option value="premium">Premium</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register">Register</label>
+                                    <input type="date" id="register" name="register" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>

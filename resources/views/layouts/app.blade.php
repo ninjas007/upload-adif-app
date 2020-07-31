@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>YB6-DXCommunity</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -32,6 +32,7 @@
           background: #fff url('/preloader.gif') no-repeat center center;
         }
     </style>
+    @yield('styles')
 </head>
 <body>
     <div id="preloader"></div>
@@ -57,6 +58,7 @@
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/awards') }}">Awards</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/members') }}">Members</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/setting') }}">Setting</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/banners') }}">Banner</a></li>
                             </li>
                             @endcan
                         @endguest

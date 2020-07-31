@@ -38,6 +38,13 @@
                                     <label for="url_gambar">Url Gambar</label>
                                     <input type="text" class="form-control" name="url_gambar" id="url_gambar" value="{{ $award->url_gambar }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="category_award">Category Award</label>
+                                    <select name="category_award" id="category_award" class="form-control">
+                                    	<option value="free" {{ ($award->category == 'free') ? 'selected' : '' }}>Free</option>
+                                    	<option value="premium" {{ ($award->category == 'premium') ? 'selected' : '' }}>Premium</option>
+                                    </select>
+                                </div>
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
                             <div class="col-md-6">

@@ -17,7 +17,7 @@ class AwardController extends Controller
      */
     public function index()
     {
-        $awards = Award::paginate(10);
+        $awards = Award::all();
         $userAwards = UserAward::where('user_id', Auth::user()->id)->get();
 
         return view('award', compact('awards', 'userAwards'));

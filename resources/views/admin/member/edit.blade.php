@@ -28,11 +28,19 @@
                                     <input type="text" class="form-control" name="callsign" id="callsign" placeholder="Callsign"  value="{{ $user->callsign }}">
                                 </div>
                                 <div class="form-group">
+                            	    <label for="member_id">Member Id</label>
+                            	    <input type="text" class="form-control" name="member_id" id="member_id" placeholder="Member Id" value="{{ $user->member_id }}">
+                            	</div>
+                                <div class="form-group">
                                     <label for="category">Kategori</label>
                                     <select name="category" id="category" class="form-control">
                                         <option value="free"{{ ($user->category == 'free') ? 'selected' : ''  }}>Free</option>
                                         <option value="premium" {{ ($user->category == 'premium') ? 'selected' : ''  }} >Premium</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register">Register</label>
+                                    <input type="date" id="register" name="register" class="form-control" value="{{ $user->register }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>

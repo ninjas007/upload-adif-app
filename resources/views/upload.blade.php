@@ -45,6 +45,7 @@
                 beforeSend: function(){
                     $('#submit').addClass('disabled');
                     $('#preloader').css('opacity', 0.3);
+                    $('#preloader').css('background-color', '#000000');
                     $('#preloader').fadeIn('slow');
                 },
                 success: function(data) {
