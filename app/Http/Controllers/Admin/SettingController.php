@@ -67,4 +67,9 @@ class SettingController extends Controller
 
         return redirect('admin/setting')->with('success', 'Berhasil mengupdate data admin');
     }
+
+    public function homeSetting(Request $request)
+    {
+        return view('admin.setting.home-setting');
+    }
 }

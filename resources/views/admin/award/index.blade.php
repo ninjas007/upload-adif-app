@@ -48,8 +48,8 @@
                                             <td>
                                                 <a href="{{ $award->url_award }}" title="Klik untuk melihat award" target="_blank">{{ $award->nama }}</a>
                                             </td>
-                                            <td>{{ strtoupper($award->category) }}</td>
-                                            <td><img src="{{ $award->url_gambar }}" width="100"></td>
+                                            <td width="150">{{ strtoupper($award->category) }}</td>
+                                            <td width="100"><img src="{{ $award->url_gambar }}" width="100" height="50"></td>
                                             <td class="text-center">
                                                 <a href="/admin/award/ubah/{{ $award->uuid }}" class="btn btn-sm btn-primary">Ubah</a>
                                                 <a href="/admin/award/hapus/{{ $award->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus award ini?')">Hapus</a>

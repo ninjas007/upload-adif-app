@@ -58,7 +58,6 @@
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/awards') }}">Awards</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/members') }}">Members</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/setting') }}">Setting</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/banners') }}">Banner</a></li>
                             </li>
                             @endcan
                         @endguest

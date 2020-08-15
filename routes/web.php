@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-   return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
 
 Auth::routes();
 Auth::routes([
@@ -63,13 +61,5 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
 
    	// admin setting
    	Route::get('admin/setting', 'Admin\SettingController@index')->name('admin/setting');
-   	Route::put('admin/setting', 'Admin\SettingController@update')->name('admin/setting'); 
-
-      // admin award
-      Route::get('admin/banners', 'Admin\BannerController@index')->name('admin/banners');
-//       Route::get('admin/award/tambah', 'Admin\AwardController@create')->name('admin/award-tambah');
-//       Route::post('admin/award/tambah', 'Admin\AwardController@store')->name('admin/award-tambah');
-//       Route::get('admin/award/ubah/{uuid}', 'Admin\AwardController@edit');
-//       Route::put('admin/award/ubah/{uuid}', 'Admin\AwardController@update');
-//       Route::get('admin/award/hapus/{id}', 'Admin\AwardController@destroy');
+   	Route::put('admin/setting', 'Admin\SettingController@update')->name('admin/setting');
 });
