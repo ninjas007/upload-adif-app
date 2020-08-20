@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('/list-member', 'WelcomeController@index');
+Route::get('/list-award', 'WelcomeController@awards');
 
 Auth::routes();
 Auth::routes([
