@@ -15,10 +15,10 @@ class MemberSeeder extends Seeder
 
         for ($i = 0; $i < 14; $i++) {
             
-            $role = 1;
+            $category = 'free';
 
             if ($i > 10) {
-                $role = 2;    
+                $category = 'premium';    
             }
 
             DB::table('users')->insert([
@@ -26,9 +26,9 @@ class MemberSeeder extends Seeder
                 'name' => 'Tilis Tiadi'.$i.'',
                 'email' => 'tilistiadi'.$i.'@gmail.com',
                 'password' => Hash::make('password'),
-                'category' => 'member',
+                'category' => $category,
                 'callsign' => 'YB'.$i.'DC',
-                'role' => $role,
+                'role' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ]);   
