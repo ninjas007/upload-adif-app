@@ -17,18 +17,14 @@
     <body>
         <div class="container px-5">
             <div class="row justify-content-center mt-4">
-                    <div class="col-md-12 mb-5">
-                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://yb6-dxc.net/wp-content/uploads/2020/06/sildenews1.jpg" class="img-fluid" alt="Image">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://ame.biz.id/wp-content/uploads/2020/06/cctvmalang.jpg" class="img-fluid" alt="Image">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://ame.biz.id/wp-content/uploads/2020/06/panel-1.jpg" class="img-fluid" alt="Image">
-                            </div>
+                <div class="col-md-12 mb-5">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach ($banners as $key => $banner)
+                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                    <img src="{{ $banner->url_image }}" alt="{{ $banner->name }}" style="max-height: 400px; max-width: 100%;">
+                                </div>    
+                            @endforeach
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -43,12 +39,22 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <p style="font-size: 20px" class="text-center border p-1">Menu</p>
+                    <p style="font-size: 20px" class="text-center border p-1"><a href="">YB6-DXC</a></p>
                     <ul class="list-group">
                         @if (Route::has('login'))
                         @auth
                         <li class="list-group-item py-2">
                             <a href="{{ url('/home') }}">Home</a>
+                        </li>
+                        <li class="list-group-item py-2">
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            </form>
                         </li>
                         @else
                         <li class="list-group-item py-2">
@@ -74,7 +80,7 @@
         </div>
         <div class="row mt-5 bg-dark">
             <div class="col-md-12 text-center">
-                <p class="text-white pt-3 font-weight-bold"><a href="#">YB6-DXC</a> - {{ date('Y') }}</p>
+                <p class="text-white pt-3 font-weight-bold"><a href="#">YB6-DXCommunity</a> - {{ date('Y') }}</p>
             </div>
         </div>
         <!-- JQuery -->

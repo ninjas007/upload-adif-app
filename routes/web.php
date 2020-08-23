@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('/list-member', 'WelcomeController@index');
-Route::get('/list-award', 'WelcomeController@awards');
+Route::get('/list-award', 'WelcomeController@index');
+Route::get('/list-member', 'WelcomeController@members');
+Route::get('/detailMember', 'WelcomeController@jsonDetailMember');
 
 Auth::routes();
 Auth::routes([
@@ -60,6 +61,9 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
       Route::post('admin/member/award-store/{id}', 'Admin\MemberController@store');
       Route::get('admin/member/award-ubah/{id}', 'Admin\MemberController@ubah');
       Route::put('admin/member/award-update/{id}', 'Admin\MemberController@update');
+
+      // admin banner
+      Route::get('admin/banners', 'Admin\SettingController@index');
 
    	// admin setting
    	Route::get('admin/setting', 'Admin\SettingController@index')->name('admin/setting');

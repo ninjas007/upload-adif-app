@@ -73,7 +73,11 @@
                               @endif
                             </div>
                             <div class="form-group">
-                                <img src="{{ asset('/storage/foto/'.$user->foto) }}" width="200" height="200" class="img-fluid py-4">
+                                @if ($user->foto == 'profile.jpg')
+                                  <img src="profile.jpg" width="200" height="200" class="img-fluid py-4">
+                                @else
+                                  <img src="{{ asset('/storage/foto/'.$user->foto) }}" width="200" height="200" class="img-fluid py-4">
+                                @endif
                             </div>
                             <div class="form-group">
                                 <input type="file" class="form-control border-0" name="foto">

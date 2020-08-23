@@ -28,6 +28,7 @@ class MemberSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'category' => $category,
                 'callsign' => 'YB'.$i.'DC',
+                'foto' => 'profile.jpg',
                 'role' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
