@@ -63,7 +63,9 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
       Route::put('admin/member/award-update/{id}', 'Admin\MemberController@update');
 
       // admin banner
-      Route::get('admin/banners', 'Admin\SettingController@index');
+      Route::get('admin/banners', 'Admin\BannerController@index')->name('admin/banners');
+      Route::get('/admin/banner/edit/{id}', 'Admin\BannerController@edit');
+      Route::put('/admin/banners/update/{id}', 'Admin\BannerController@update')->name('admin/banners/update');
 
    	// admin setting
    	Route::get('admin/setting', 'Admin\SettingController@index')->name('admin/setting');

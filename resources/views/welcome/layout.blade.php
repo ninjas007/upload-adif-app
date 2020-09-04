@@ -1,3 +1,6 @@
+@php
+    date_default_timezone_set('Asia/Jakarta');
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -72,6 +75,12 @@
                             <a href="/list-member">Members</a>
                         </li>
                     </ul>
+                    <div class="card text-center mt-3 btn bg-primary text-white">
+                        <div class="border">
+                            <h3>Server Time</h3>
+                            {{ date('d-m-Y H:i:s') }}
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-9">
                     @yield('content')
