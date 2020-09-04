@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Banner;
 
 class BannerController extends Controller
 {
@@ -14,50 +15,9 @@ class BannerController extends Controller
      */
     public function index()
     {
-        
-    }
+        $data['banners'] = Banner::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('admin.banner.index', $data);
     }
 
     /**
@@ -67,19 +27,26 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        $banner = Banner::findOrFail($id);
+
+        $banner->name = $request->name;
+        $banner->url_image = $request->url_image;
+        $banner->is_active = $request->is_active;
+
+        if ($banner->save()) {
+            return redirect('admin/banners')->with('success', 'Berhasil mengupdate data banner');
+        } else {
+            return redirect('admin/banners')->with('error', 'Gagal mengupdate data banner');
+        }
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function edit($id)
     {
-        //
+        $data['banner'] = Banner::findOrFail($id);
+
+        return view('admin.banner.edit', $data);
     }
 }
