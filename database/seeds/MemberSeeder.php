@@ -21,12 +21,21 @@ class MemberSeeder extends Seeder
                 $category = 'premium';    
             }
 
+            if ($i == 3) {
+                $email = 'tilistiadi03@gmail.com';
+                $date = date('Y-m-d');
+            } else {
+                $email = 'tilistiadi'.$i.'@gmail.com';
+                $date = null;
+            }
+
             DB::table('users')->insert([
                 'member_id' => '00'.$i.'',
                 'name' => 'Tilis Tiadi'.$i.'',
-                'email' => 'tilistiadi'.$i.'@gmail.com',
+                'email' => $email,
                 'password' => Hash::make('password'),
                 'category' => $category,
+                'register' => $date,
                 'callsign' => 'YB'.$i.'DC',
                 'foto' => 'profile.jpg',
                 'role' => 1,

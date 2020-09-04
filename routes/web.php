@@ -29,6 +29,8 @@ Route::get('register', function(){
 
 Route::get('send-mail', 'UploadController@mail');
 
+Route::get('cronjob', 'CronJobController@index');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['can:isMember', 'auth']], function() {
 	Route::get('/awards', 'AwardController@index')->name('awards');
