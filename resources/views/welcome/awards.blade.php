@@ -7,7 +7,7 @@
         <!-- Card -->
         <div class="card">
             <!-- Card image -->
-            <a href="{{ $award->url_award }}">
+            <a href="{{ $award->url_award }}" target="_blank">
                 <div class="view overlay">
                     <img class="card-img-top img-fluid" src="{{ $award->url_gambar }}" alt="{{ $award->nama }}" style="height: 180px;">
                     <div class="mask rgba-white-slight"></div>
@@ -15,8 +15,12 @@
             </a>
             <!-- Card content -->
             <div class="card-body text-center">
-                <h4 class="card-title">{{ $award->nama }}</h4>
-                <p class="card-text">Category : {{ ucfirst($award->category) }}</p>
+                <p class="card-title fon-weight-bold">{{ $award->nama }}</p>
+                @if ($award->category == 'premium')
+                <p class="card-text text-success">Category : {{ ucfirst($award->category) }}</p>
+                @else
+                <p class="card-text text-primary">Category : {{ ucfirst($award->category) }}</p>
+                @endif
             </div>
         </div>
     </div>

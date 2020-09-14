@@ -63,6 +63,7 @@
                         <tr><td style="vertical-align: middle;">${member.category}</td></tr>
                         <tr><td style="vertical-align: middle;">`+memberAlamat(member.alamat)+`</td></tr>
                         <tr><td colspan="2" align="center">RECORDS</td></tr>
+                        <tr><td colspan="2" align="center">Coming Soon!</td></tr>
                     </table>`;
                     $('.modal-body').html(content)
                     $('#myModal').modal('show')
