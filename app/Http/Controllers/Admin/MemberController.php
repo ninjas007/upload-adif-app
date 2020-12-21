@@ -15,6 +15,97 @@ use Auth;
 
 class MemberController extends Controller
 {
+
+    public function jsonAdminMembers(Request $request)
+    {
+        $columns = [
+            'name', 'category', 'callsign', 'class_premium', 'register'          
+        ];
+        
+        $totalData = User::count();
+            
+        $totalFiltered = $totalData; 
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+            
+        if(empty($request->input('search.value')))
+        {            
+            $members = User::offset($start)
+                         ->limit($limit)
+                         ->orderBy($order,$dir)
+                         ->get();
+        }
+        // search
+        else {
+            $search = $request->input('search.value'); 
+
+            $members =  User::where('id','LIKE',"%{$search}%")
+                            ->orWhere('name', 'LIKE',"%{$search}%")
+                            ->orWhere('callsign', 'LIKE',"%{$search}%")
+                            ->orWhere('class_premium', 'LIKE',"%{$search}%")
+                            ->orWhere('category', 'LIKE',"%{$search}%")
+                            ->orWhere('register', 'LIKE',"%{$search}%")
+                            ->offset($start)
+                            ->limit($limit)
+                            ->orderBy($order,$dir)
+                            ->get();
+
+            $totalFiltered = User::where('id','LIKE',"%{$search}%")
+                             ->orWhere('name', 'LIKE',"%{$search}%")
+                             ->orWhere('callsign', 'LIKE',"%{$search}%")
+                            ->orWhere('class_premium', 'LIKE',"%{$search}%")
+                             ->orWhere('category', 'LIKE',"%{$search}%")
+                            ->orWhere('register', 'LIKE',"%{$search}%")
+                             ->count();
+        }
+
+        $data = array();
+        if(!empty($members))
+        {
+            foreach ($members as $key => $member)
+            {
+                $nestedData['member'] = '<a href="#" class="detail" data-id="'.$member->id.'" data-toggle="modal" data-target="#detailModal">'.$member->name.'  <br> '.$member->no_hp.'</a>';
+
+                if ($member->callsign == null) {
+                    $callsign = '-';
+                } else {
+                    $callsign = $member->callsign;
+                }
+
+                $nestedData['info'] = '<div class="font-weight-bold">Callsign : '.$callsign.'</div>';
+                $nestedData['info'] .= '<div class="font-weight-bold">Kategori : '.ucfirst($member->category).'</div>';
+
+                if ($member->life_time == 1) {
+                    $nestedData['info'] .= 'Life Time : Aktif';
+                }
+
+                if (!is_null($member->class_premium)) {
+                    $nestedData['info'] .= '<div class="font-weight-bold">Class Premium : '.ucfirst($member->class_premium).'</div>';
+                }
+
+                $nestedData['registrasi'] = ($member->register == null) ? '-' : date('d M Y', strtotime($member->register));
+                $nestedData['award'] = '<a href="/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
+                $nestedData['action'] = '<a href="admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
+                $nestedData['action'] .= '<a href="/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
+
+                $data[] = $nestedData;
+
+            }
+        }
+          
+        $json_data = array(
+                    "draw"            => intval($request->input('draw')),  
+                    "recordsTotal"    => intval($totalData),  
+                    "recordsFiltered" => intval($totalFiltered), 
+                    "data"            => $data   
+                    );
+            
+        return response()->json($json_data);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +113,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = User::where('role', 1)->get();
+        // $members = User::where('role', 1)->get();
 
-        return view('admin.member.index', compact('members'));
+        return view('admin.member.index');
     }
 
     /**
@@ -34,6 +125,8 @@ class MemberController extends Controller
      */
     public function create()
     {
+        $this->checkAdmin();
+        
         return view('admin.member.create');
     }
 
@@ -79,6 +172,8 @@ class MemberController extends Controller
             'callsign' => $request->callsign,
             'password' => Hash::make($request->password),
             'category' => $request->category,
+            'class_premium' => $request->class_premium,
+            'life_time' => $request->life_time,
             'role' => 1,
             'foto' => 'profile.jpg',
             'register' => $request->register,
@@ -169,7 +264,10 @@ class MemberController extends Controller
         $user->email = $request->email;
         $user->callsign = $request->callsign;
         $user->category = $request->category;
+        $user->class_premium = $request->class_premium;
+        $user->life_time = $request->life_time;
         $user->register = $request->register;
+        $user->active = $request->active;
         $user->updated_at = date('Y-m-d H:i:s');
 
         if ($request->password != '') {
@@ -183,6 +281,8 @@ class MemberController extends Controller
 
     public function destroy($id)
     {
+        $this->checkAdmin();
+
         $user = User::findOrFail($id);
         $userAwards = UserAward::where('user_id', $id)->get();
 
@@ -197,5 +297,13 @@ class MemberController extends Controller
         $user->delete();
 
         return redirect('admin/members')->with('success', 'Berhasil menghapus member');
+    }
+
+    private function checkAdmin()
+    {
+        if (Auth::user()->manager == 1 && Auth::user()->category == 'admin') {
+            echo 'Bukan super admin';
+            die;
+        }
     }
 }   

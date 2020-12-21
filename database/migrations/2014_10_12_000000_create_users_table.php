@@ -22,7 +22,13 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('callsign', 20)->nullable();
             $table->string('category', 20);
+            $table->string('class_premium', 20)->nullable();
+            $table->boolean('life_time')->default(0);
             $table->date('register')->nullable();
+            $table->boolean('active')->default(1);
+            $table->boolean('manager')->default(0);
+            $table->integer('life_time')
+                ->default(0);
             $table->rememberToken();
             $table->string('no_hp', 20)->nullable();
             $table->text('alamat')->nullable();

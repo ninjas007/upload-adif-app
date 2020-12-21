@@ -54,7 +54,7 @@
                               <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="Contoh : 081234XXXX" value="{{ $user->no_hp }}">
                             </div>
                             <div class="form-group">
-                              <label for="alamat">Address</label>
+                              <label for="alamat">Description</label>
                               <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control" style="resize: none;">{{ $user->alamat }}</textarea>
                             </div>
                         </div>

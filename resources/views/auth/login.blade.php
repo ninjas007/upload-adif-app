@@ -16,10 +16,15 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ url('/') }}"><img src="https://yb6-dxc.net/wp-content/uploads/2019/08/gbr-1.jpg" class="img-fluid" alt="logo-yb6dxc"></a>
+                        <a href="{{ url('/') }}"><img src="https://yb6-dxc.net/wp-content/uploads/2020/10/gbr-2.jpg" class="img-fluid" alt="logo-yb6dxc"></a>
                         <ul class="nav nav-tabs py-3 border-0 nav-justified">
                           <li class="nav-item"><h3>LOGIN</h3></li>
                         </ul>
+                        @if(session()->has('error'))
+                            <div class="alert alert-danger alert-dismissible text-center" role="alert">
+                              {!! session()->get('error') !!}
+                            </div>
+                        @endif
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 

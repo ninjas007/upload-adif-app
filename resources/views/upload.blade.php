@@ -19,8 +19,7 @@
                                     <button type="submit" class="btn btn-primary" id="submit">Submit</button>
                                 </div>
                             </div>
-                            <div class="col-md-6 pt-md-4 message">
-                            </div>
+                            <div class="col-md-6 pt-md-4 message"></div>
                         </div>
                     </form>
                 </div>
@@ -58,9 +57,13 @@
                     $('#preloader').fadeOut('slow');
                 },
                 error: function(data){
+                    message = 'The system is being repaired, please send your adif file to email hq.yb6dxc@gmail.com. Sorry for the inconvenience thanks 73';
+                    if (data.status == 500) {
+                        message = `Error upload file. Please send your file adif to email: hq.yb6dxc@gmail.com`;
+                    }
                     $('.message').html(` <div class="alert alert-danger alert-dismissible" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    ${data.responseJSON.msg}
+                                    ${message}      
                                 </div>`)
                     $('#submit').removeClass('disabled');
                     $('#preloader').fadeOut('slow');

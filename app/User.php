@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'callsign', 'password', 'foto', 'role', 'category', 'member_id', 'register'
+        'name', 'email', 'callsign', 'password', 'foto', 'role', 'category', 'class_premium', 'life_time', 'member_id', 'register'
     ];
 
     /**
@@ -40,5 +40,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function awards()
     {
         return $this->belongsToMany('App\Award', 'user_awards', 'award_id', 'user_id');
+    }
+
+    public function userAwards()
+    {
+        return $this->belongsToMany('App\Award', 'user_awards');
     }
 }

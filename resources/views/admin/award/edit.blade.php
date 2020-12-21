@@ -35,7 +35,7 @@
                                     <input type="text" class="form-control" name="url_award" id="url_award" value="{{ $award->url_award }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="url_gambar">Url Gambar</label>
+                                    <label for="url_gambar">Url Image</label>
                                     <input type="text" class="form-control" name="url_gambar" id="url_gambar" value="{{ $award->url_gambar }}">
                                 </div>
                                 <div class="form-group">

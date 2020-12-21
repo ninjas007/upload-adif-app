@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>YB6-DXC</title>
+        <title>YB6-DXCommunity</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
@@ -26,6 +26,7 @@
           background: #fff url('/preloader.gif') no-repeat center center;
         }
         </style>
+        
     </head>
     <body>
         <div id="preloader"></div>
@@ -53,7 +54,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <p style="font-size: 20px" class="text-center border p-1"><a href="">YB6-DXC</a></p>
+                    <p style="font-size: 20px" class="text-center border p-1"><a href="">YB6_DXCommunity</a></p>
                     <ul class="list-group">
                         @if (Route::has('login'))
                         @auth
@@ -85,11 +86,15 @@
                         <li class="list-group-item py-2">
                             <a href="/list-member">Members</a>
                         </li>
+                        <li class="list-group-item py-2">
+                            <a href="https://yb6-dxc.net/help-desk/" target="">Help Desk</a>
+                        </li>
                     </ul>
-                    <div class="card text-center mt-3 btn bg-primary text-white">
+                    <div class="card text-center my-3">
                         <div class="border">
-                            <h3>Server Time</h3>
-                            {{ date('d-m-Y H:i:s') }}
+                            {{-- {{ date('d-m-Y') }} <br> --}}
+                            {{-- <span id="jam"></span>:<span id="menit"></span>:<span id="detik"></span> --}}
+                            <div style="text-align:center;padding:1em 0;"><h4>Server Time</h4> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta" width="100%" height="90" frameborder="0" seamless></iframe> </div>
                         </div>
                     </div>
                 </div>
@@ -108,7 +113,16 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         @yield('js')
-        <script>
+        <script type="text/javascript">
+            // window.setTimeout("waktu()", 1000);
+         
+            // function waktu() {
+            //     var waktu = new Date();
+            //     setTimeout("waktu()", 1000);
+            //     document.getElementById("jam").innerHTML = (waktu.getHours()) < 10 ? '0'+waktu.getHours() : waktu.getHours();
+            //     document.getElementById("menit").innerHTML = (waktu.getMinutes()) < 10 ? '0'+waktu.getMinutes() : waktu.getMinutes();
+            //     document.getElementById("detik").innerHTML = (waktu.getSeconds() < 10) ? '0'+waktu.getSeconds() : waktu.getSeconds();
+            // }
             $('#preloader').fadeOut('slow');
         </script>
     </body>

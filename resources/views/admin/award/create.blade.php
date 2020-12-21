@@ -22,7 +22,7 @@
                                     <input type="text" class="form-control" name="url_award" id="url_award" placeholder="Cth: https://yb6-dxc.net/portfolio/president-bronze-award/">
                                 </div>
                                 <div class="form-group">
-                                    <label for="url_gambar">Url Gambar</label>
+                                    <label for="url_gambar">Url Image</label>
                                     <input type="text" class="form-control" name="url_gambar" id="url_gambar" placeholder="Cth: https://yb6-dxc.net/wp-content/uploads/2020/05/PBA-Award-2.jpg">
                                 </div>
                                 <div class="form-group">

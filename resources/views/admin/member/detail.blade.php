@@ -7,5 +7,8 @@
 	<tr><td style="width: 30%">Email</td><td>:</td><td>{{ $user->email }}</td></tr>
 	<tr><td style="width: 30%">Callsign</td><td>:</td><td>{{ $user->callsign }}</td></tr>
 	<tr><td style="width: 30%">Kategori</td><td>:</td><td>{{ strtoupper($user->category) }}</td></tr>
+	@if ($user->category == 'premium')
+	<tr><td style="width: 30%">Class Premium</td><td>:</td><td>{{ strtoupper($user->class_premium) }}</td></tr>
+	@endif
 	<tr><td style="width: 30%">Alamat</td><td>:</td><td>{{ $user->alamat }}</td></tr>
 </table>

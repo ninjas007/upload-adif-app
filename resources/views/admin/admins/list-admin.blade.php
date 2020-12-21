@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header text-white bg-danger font-weight-bold">Award</div>
+                <div class="card-header text-white bg-danger font-weight-bold">List Admin</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -29,33 +29,29 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="{{ route('admin/award-tambah') }}" class="btn btn-success mb-3">Tambah Award</a>
+                            <a href="{{ route('admin/admin-tambah') }}" class="btn btn-success mb-3">Tambah Admin</a>
                             <table class="table table-bordered" id="myTable">
                                 <thead>
                                     <tr>
-                                        <th>Award</th>
-                                        <th>Category</th>
-                                        <th>Image</th>
-                                        <th width="180" class="text-center">Action</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>No Hp</th>
+                                        <th width="180" class="text-center">Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (count($awards) == 0)
+                                    @if (count($users) == 0)
                                         <tr><td colspan="5" style="text-align: center;">Belum ada data</td></tr>
-                                    @endif
-                                    @foreach ($awards as $award)
+                                    @else
+                                    @foreach ($users as $user)
                                         <tr>
-                                            <td>
-                                                <a href="{{ $award->url_award }}" title="Klik untuk melihat award" target="_blank">{{ $award->nama }}</a>
-                                            </td>
-                                            <td>{{ strtoupper($award->category) }}</td>
-                                            <td><img src="{{ $award->url_gambar }}" width="100"></td>
-                                            <td class="text-center">
-                                                <a href="/admin/award/ubah/{{ $award->uuid }}" class="btn btn-sm btn-primary">Ubah</a>
-                                                <a href="/admin/award/hapus/{{ $award->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus award ini?')">Hapus</a>
-                                            </td>
+                                            <td>{{ $user['name'] }}</td>
+                                            <td>{{ $user['email'] }}</td>
+                                            <td>{{ ($user['no_hp'] == null) ? '-' : $user['no_hp'] }}</td>
+                                            <td class="text-center"><a href="/admin/admin-hapus/{{ $user['id'] }}" class="btn btn-danger btn-sm">Hapus</a></td>
                                         </tr>
                                     @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

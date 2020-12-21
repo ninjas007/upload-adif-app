@@ -5,9 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Banner;
+use Auth;
 
 class BannerController extends Controller
 {
+    private function checkAdmin()
+    {
+        if (Auth::user()->manager == 1 && Auth::user()->category == 'admin') {
+            echo 'Bukan super admin';
+            die;
+        }
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +24,8 @@ class BannerController extends Controller
      */
     public function index()
     {
+        $this->checkAdmin();
+        
         $data['banners'] = Banner::all();
 
         return view('admin.banner.index', $data);
@@ -45,6 +56,8 @@ class BannerController extends Controller
 
     public function edit($id)
     {
+        $this->checkAdmin();
+        
         $data['banner'] = Banner::findOrFail($id);
 
         return view('admin.banner.edit', $data);

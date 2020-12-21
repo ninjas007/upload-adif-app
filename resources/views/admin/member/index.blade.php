@@ -2,6 +2,12 @@
 
 @section('styles')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+<style>
+    table tr th,
+    table tr td {
+        padding: 7px !important;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -19,34 +25,19 @@
                         </div>
                     @endif
                     <a href="{{ route('admin/member-tambah') }}" class="btn btn-success mb-3">Tambah Member</a>
-                    <table class="table table-bordered" id="myTable">
+                    <table class="table table-bordered" id="myTable" style="font-size: 12px;">
                         <thead>
                             <tr>
                                 <th width="180">Member</th>
-                                <th>Callsign</th>
+                                {{-- <th>Callsign</th> --}}
+                                <th>Info</th>
                                 <th width="150">Registrasi</th>
                                 <th style="text-align: center;" width="100">Award</th>
                                 <th style="text-align: center;" width="140">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (count($members) == 0)
-                                <tr><td colspan="6" style="text-align: center;">Tidak ada data</td></tr>
-                            @endif
-                            @foreach ($members as $member)
-                                <tr>
-                                    <td><a href="#" class="detail" data-id="{{ $member->id }}" data-toggle="modal" data-target="#detailModal">{{ $member->name }}  <br> {{ $member->no_hp }}</a></td>
-                                    <td>{{ ($member->callsign == null) ? '-' : $member->callsign }}</td>
-                                    <td>{{ date('d M Y', strtotime($member->register)) }}</td>
-                                    <td align="center">
-                                        <a href="/admin/member/award-update/{{ $member->id }}" class="btn btn-success btn-sm">Update</a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="{{ url('admin/member/edit/'.$member->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="/admin/member/hapus/{{ $member->id }}" class="btn btn-danger btn-sm">Hapus</a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                          
                         </tbody>
                     </table>
                 </div>
@@ -62,7 +53,35 @@
 <script type="text/Javascript">
     $(function() {
         $.noConflict();
-        $('#myTable').DataTable();
+        // $('#myTable').DataTable();
+
+        $('#myTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                     "url": "/admin/jsonAdminMembers",
+                     "dataType": "json",
+                     "type": "POST",
+                     "data":{ _token: "{{csrf_token()}}"}
+                   },
+            "columns": [
+                { "data": "member" },
+                { "data": "info" },
+                { "data": "registrasi" },
+                { "data": "award" },
+                { "data": "action" }
+            ],
+            "columnDefs" : [
+                {
+                    "targets": -2,
+                    "className": 'text-center'
+                },
+                {
+                    "targets": -1,
+                    "className": 'text-center'
+                }
+            ]
+        });
 
         $('#myTable').on('click', '.detail', function(){
             let id = $(this).data('id')

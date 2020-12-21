@@ -18,9 +18,11 @@
                                 <input type="text" name="url_image" class="form-control mb-3" id="url_image" placeholder="Url Image" value="{{ $banner->url_image }}">
                                 <select name="is_active" id="is_active" class="form-control">
                                     @if ($banner->is_active == 1)
-                                    <option value="1">Aktif</option>
-                                    @else
+                                    <option value="1" selected>Aktif</option>
                                     <option value="0">Tidak Aktif</option>
+                                    @else
+                                    <option value="1">Aktif</option>
+                                    <option value="0" selected>Tidak Aktif</option>
                                     @endif
                                 </select>
                                 <div class="text-danger mt-2">Ukuran gambar yang diambil dari url baiknya 1170 x 450</div>
