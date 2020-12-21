@@ -40,7 +40,8 @@ class WelcomeController extends Controller
         {            
             $members = User::offset($start)
                          ->limit($limit)
-                         ->orderBy($order,$dir)
+                         ->orderBy('id')
+                         ->where('role', 1)
                          ->get();
         }
         else {
@@ -53,7 +54,7 @@ class WelcomeController extends Controller
                             ->orWhere('register', 'LIKE',"%{$search}%")
                             ->offset($start)
                             ->limit($limit)
-                            ->orderBy($order,$dir)
+                            ->orderBy('id')
                             ->get();
 
             $totalFiltered = User::where('id','LIKE',"%{$search}%")
@@ -69,21 +70,26 @@ class WelcomeController extends Controller
         {
             foreach ($members as $key => $member)
             {
-                // $show =  route('posts.show',$post->id);
-                // $edit =  route('posts.edit',$post->id);
-                $nestedData['#'] = ++$key;
-                if ($member->category == 'premium') {
-                    $nestedData['name'] = '<a href="#" class="detail" data-memberid="YB6_DXCom#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
-                } else if ($member->category == 'free') {
-                    $nestedData['name'] = '<a href="#" class="detail" data-memberid="BSC#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
+                if ($member->role == 1) {
+                    $nestedData['#'] = ++$key;
+                    if ($member->category == 'premium') {
+                        $nestedData['name'] = '<a href="#" class="detail" data-memberid="YB6_DXCom#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
+                    } else if ($member->category == 'free') {
+                        $nestedData['name'] = '<a href="#" class="detail" data-memberid="BSC#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
+                    }
+
+                    $nestedData['category'] = ucfirst($member->category);
+                    $nestedData['callsign'] = $member->callsign;
+                    $nestedData['register'] = ($member->register == null) ? '-' : $member->register;
+
+                    if ($member->life_time == 1) {
+                        $nestedData['expired'] = 'Life Time';
+                    } else {
+                        $nestedData['expired'] = ($member->register == null) ? '-' : date('Y-m-d', strtotime('+365 day', strtotime($member->register)));
+                    }
+
+                    $data[] = $nestedData;
                 }
-
-                $nestedData['category'] = ucfirst($member->category);
-                $nestedData['callsign'] = $member->callsign;
-                $nestedData['register'] = ($member->register == null) ? '-' : $member->register;
-                $nestedData['expired'] = ($member->register == null) ? '-' : date('Y-m-d', strtotime('+365 day', strtotime($member->register)));
-                $data[] = $nestedData;
-
             }
         }
           
