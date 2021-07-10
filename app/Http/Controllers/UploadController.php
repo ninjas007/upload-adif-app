@@ -87,7 +87,7 @@ class UploadController extends Controller
         $send2 = \Mail::to($user->email)->send(new \App\Mail\UploadFileMail($data));
 
         return response([
-            'msg' => 'File for a successful award claim, please wait while in progress',
+            'msg' => 'QSO LOGS was Successfully Updated from ADIF to Database, And your award application has been completed automatically. Please allow time for our managers to check in a maximum of 7 working days to check the award',
             'status' => 200
         ], 200);
         

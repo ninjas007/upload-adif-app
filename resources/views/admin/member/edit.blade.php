@@ -90,6 +90,10 @@
                                     <input type="text" class="form-control" name="password" id="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
+                                    <label for="certificate">Certificate Member</label>
+                                    <input type="text" class="form-control" name="certificate" id="certificate" placeholder="link google drive" value="{{ $user->certificate }}">
+                                </div>
+                                <div class="form-group">
                                     <input type="submit" class="btn btn-primary float-right" value="Submit">
                                 </div>
                             </div>

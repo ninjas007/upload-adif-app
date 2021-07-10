@@ -14,7 +14,14 @@ class Award extends Model
 
     public function users()
     {
-    	return $this->belongsToMany('App\User');
+        // awalnya seperti ini return $this->belongsToMany('App\User');
+        
+    	return $this->belongsTo('App\User', 'users', 'id', 'user_id');
     }
 
+    public function userAwards()
+    {
+        return $this->hasMany('App\UserAward');
+    }
 }
+

@@ -13,7 +13,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="adif">File Adif</label>
-                                    <input type="file" name="adif" class="form-control" id="adif" accept=".adi">
+                                    <input type="file" name="adif" class="form-control" id="adif">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary" id="submit">Submit</button>
@@ -57,9 +57,9 @@
                     $('#preloader').fadeOut('slow');
                 },
                 error: function(data){
-                    message = 'The system is being repaired, please send your adif file to email hq.yb6dxc@gmail.com. Sorry for the inconvenience thanks 73';
+                    message = 'There was an error uploading the file, the adif file is too big, please follow the instructions <a href="https://yb6-dxc.net/form-adif-zip/">please click here for you to send your adif file</a>';
                     if (data.status == 500) {
-                        message = `Error upload file. Please send your file adif to email: hq.yb6dxc@gmail.com`;
+                        message = `There was an error uploading the file, the adif file is too big, please follow the instructions <a href="https://yb6-dxc.net/form-adif-zip/">please click here for you to send your adif file</a>`;
                     }
                     $('.message').html(` <div class="alert alert-danger alert-dismissible" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>YB6-DXCommunity</title>
+    <title>YB6_DXCommunity Member Award</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

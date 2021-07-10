@@ -88,7 +88,7 @@ class MemberController extends Controller
 
                 $nestedData['registrasi'] = ($member->register == null) ? '-' : date('d M Y', strtotime($member->register));
                 $nestedData['award'] = '<a href="/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
-                $nestedData['action'] = '<a href="admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
+                $nestedData['action'] = '<a href="/admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
                 $nestedData['action'] .= '<a href="/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
 
                 $data[] = $nestedData;
@@ -179,6 +179,7 @@ class MemberController extends Controller
             'register' => $request->register,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
+            'certificate' => $request->certificate
         ]);
 
         $user->save();
@@ -269,6 +270,7 @@ class MemberController extends Controller
         $user->register = $request->register;
         $user->active = $request->active;
         $user->updated_at = date('Y-m-d H:i:s');
+        $user->certificate = $request->certificate;
 
         if ($request->password != '') {
             $user->password = Hash::make($request->password);

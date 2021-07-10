@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>YB6-DXCommunity</title>
+    <title>YB6_DXCommunity Member Award</title>
   </head>
   <body style="background-color: #e8f0fe">
     <div class="container mt-3">

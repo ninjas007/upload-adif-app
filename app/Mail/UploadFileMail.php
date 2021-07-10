@@ -30,6 +30,11 @@ class UploadFileMail extends Mailable
     {
         $data = $this->data;
 
+        if ($data['to_user_email']) {
+            return $this->subject('claim confirmation YB6-DXCommunity awards')
+                        ->view('emails.upload_file_notification', compact('data'));
+        }
+
         return $this->subject('Member File '.$data['callsign'].'')
                     ->view('emails.upload_file', compact('data'))
                     ->attach($data['file']->getrealPath(), [

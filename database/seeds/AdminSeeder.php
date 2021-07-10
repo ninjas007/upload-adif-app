@@ -17,15 +17,14 @@ class AdminSeeder extends Seeder
         DB::table('users')->insert([
             'member_id' => '',
             'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password'),
+            'email' => 'admin123@gmail.com',
+            'password' => Hash::make('passwordadmin123'),
             'category' => 'admin',
             'callsign' => '',
             'role' => 0,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
-
         // DB::table('users')->insert([
         //     'name' => 'Tilis Tiadi',
         //     'email' => 'tiliztiadi@gmail.com',

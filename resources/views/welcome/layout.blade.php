@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>YB6-DXCommunity</title>
+        <title>YB6_DXCommunity Member Award</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
@@ -26,7 +26,13 @@
           background: #fff url('/preloader.gif') no-repeat center center;
         }
         </style>
-        
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>      
     </head>
     <body>
         <div id="preloader"></div>
@@ -83,9 +89,11 @@
                         <li class="list-group-item py-2">
                             <a href="/list-award">Awards</a>
                         </li>
+			<li class="list-group-item py-2">
+                            <a href="https://yb6-dxc.net/managers/" target="">Manager</a>
+                        </li>
                         <li class="list-group-item py-2">
                             <a href="/list-member">Members</a>
-                        </li>
                         <li class="list-group-item py-2">
                             <a href="https://yb6-dxc.net/help-desk/" target="">Help Desk</a>
                         </li>
@@ -95,7 +103,7 @@
                             {{-- {{ date('d-m-Y') }} <br> --}}
                             {{-- <span id="jam"></span>:<span id="menit"></span>:<span id="detik"></span> --}}
                             <div style="text-align:center;padding:1em 0;"><h4>Server Time</h4> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta" width="100%" height="90" frameborder="0" seamless></iframe> </div>
-                        </div>
+                        </div>		
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -105,7 +113,8 @@
         </div>
         <div class="row mt-5 bg-dark">
             <div class="col-md-12 text-center">
-                <p class="text-white pt-3 font-weight-bold"><a href="#">YB6-DXCommunity</a> - {{ date('Y') }}</p>
+                <p class="text-white pt-3 font-weight-bold"><a href="https://yb6-dxc.net/">YB6_DXCommunity</a> - {{ date('Y') }}</p>
+            </div>
             </div>
         </div>
         <!-- JQuery -->

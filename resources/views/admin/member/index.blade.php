@@ -25,21 +25,22 @@
                         </div>
                     @endif
                     <a href="{{ route('admin/member-tambah') }}" class="btn btn-success mb-3">Tambah Member</a>
-                    <table class="table table-bordered" id="myTable" style="font-size: 12px;">
-                        <thead>
-                            <tr>
-                                <th width="180">Member</th>
-                                {{-- <th>Callsign</th> --}}
-                                <th>Info</th>
-                                <th width="150">Registrasi</th>
-                                <th style="text-align: center;" width="100">Award</th>
-                                <th style="text-align: center;" width="140">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          
-                        </tbody>
-                    </table>
+                    <div style="overflow-x: scroll;">
+                        <table class="table table-bordered" id="myTable" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th width="180">Member</th>
+                                    <th>Info</th>
+                                    <th width="150">Registrasi</th>
+                                    <th style="text-align: center;" width="100">Award</th>
+                                    <th style="text-align: center;" width="140">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

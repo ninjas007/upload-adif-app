@@ -27,7 +27,7 @@ class WelcomeController extends Controller
             'name', 'category', 'callsign', 'register'            
         ];
   
-        $totalData = User::count();
+        $totalData = User::where('role', 1)->count();
             
         $totalFiltered = $totalData; 
 
@@ -56,7 +56,6 @@ class WelcomeController extends Controller
                             ->limit($limit)
                             ->orderBy('id')
                             ->get();
-
             $totalFiltered = User::where('id','LIKE',"%{$search}%")
                              ->orWhere('name', 'LIKE',"%{$search}%")
                              ->orWhere('callsign', 'LIKE',"%{$search}%")
@@ -71,13 +70,13 @@ class WelcomeController extends Controller
             foreach ($members as $key => $member)
             {
                 if ($member->role == 1) {
-                    $nestedData['#'] = ++$key;
+                    $nestedData['#'] = $start + ($key + 1);
                     if ($member->category == 'premium') {
                         $nestedData['name'] = '<a href="#" class="detail" data-memberid="YB6_DXCom#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
                     } else if ($member->category == 'free') {
                         $nestedData['name'] = '<a href="#" class="detail" data-memberid="BSC#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
                     }
-
+                    
                     $nestedData['category'] = ucfirst($member->category);
                     $nestedData['callsign'] = $member->callsign;
                     $nestedData['register'] = ($member->register == null) ? '-' : $member->register;
@@ -89,6 +88,7 @@ class WelcomeController extends Controller
                     }
 
                     $data[] = $nestedData;
+                    $totalData = count($data);
                 }
             }
         }
@@ -121,7 +121,10 @@ class WelcomeController extends Controller
             'alamat' => $member[0]->alamat,
             'foto' => $member[0]->foto,
             'category' => ucfirst($member[0]->category),
-            'class_premium' => strtoupper($member[0]->class_premium)
+            'class_premium' => strtoupper($member[0]->class_premium),
+            'member_id' => $member[0]->member_id,
+            'register' => $member[0]->register ? $member[0]->register : '-',
+            'expired' => $member[0]->life_time == 1 ? 'Life Time' : date('Y-m-d', strtotime('+365 day', strtotime($member[0]->register))),
         ];
 
         $data['records'] = [];

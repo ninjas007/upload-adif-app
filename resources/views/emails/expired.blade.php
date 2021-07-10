@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Expired Account Member YB6DXC</title>
+    <title>Expired Account Member YB6_DXCommunity</title>
 </head>
 <body style="font-size: 14px; text-align: center;">
 	<div>Hello, {{ $data['nama'] }}</div>

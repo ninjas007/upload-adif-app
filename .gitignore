@@ -13,3 +13,5 @@ yarn-error.log
 composer.json
 composer.lock
 .gitignore
+/public/storage
+/storage/framework/*

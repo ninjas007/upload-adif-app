@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'YB6DXC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://member.yb6-dxc.net/'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,7 +226,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'DataTables' => yajra\DataTables\Facades\DataTables::class,
 
     ],
 

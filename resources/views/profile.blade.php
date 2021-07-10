@@ -82,6 +82,9 @@
                             <div class="form-group">
                                 <input type="file" class="form-control border-0" name="foto">
                             </div>
+                            <div class="form-group">
+                                <a href="{{ $user->certificate }}" class="btn btn-primary" target="_blank">Download Certificate</a>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
