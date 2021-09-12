@@ -75,11 +75,8 @@
                             <td>:</td>
                             <td style="vertical-align: middle;">${member.register}</td>
                         </tr>
-                        <tr>
-                            <td  style="width: 150px;" colspan="1">Expired</td>
-                            <td>:</td>
-                            <td style="vertical-align: middle;">${member.expired}</td>
-                        </tr>
+                        `+memberExpired(member.category, member.life_time, member.expired)+`
+                       
                          ${member.category == 'Premium' 
                          ? `<tr><td style="vertical-align: middle;" class="text-info font-weight-bold" colspan="3">
                                 ${member.class_premium}
@@ -121,6 +118,29 @@
 
             function memberFoto(foto) {
                  return foto == 'profile.jpg' ? `<img src="profile.jpg" width="200" class="float-right">` : `<img src="/storage/foto/${foto}"  width="200">`;
+            }
+
+            function memberExpired(category, life_time, expired) {
+                if(member.life_time == 1) {
+                    life_time = 'Life Time';
+                } else {
+                    life_time = expired;
+                }
+
+                if (category != 'Free') {
+                    return ` <tr>
+                            <td  style="width: 150px;" colspan="1">Expired</td>
+                            <td>:</td>
+                            <td style="vertical-align: middle;">`+life_time+`</td>
+                        </tr>`;
+                } else {
+                    return ` <tr>
+                            <td  style="width: 150px;" colspan="1">Expired</td>
+                            <td>:</td>
+                            <td style="vertical-align: middle;">-</td>
+                        </tr>`;
+                }
+                
             }
         });
     });

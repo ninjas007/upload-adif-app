@@ -30,6 +30,7 @@
                                     <select name="category_award" id="category_award" class="form-control">
                                     	<option value="free">Free</option>
                                     	<option value="premium">Premium</option>
+                                    	<option value="All member"}>All Member</option>
                                     </select>
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Submit">

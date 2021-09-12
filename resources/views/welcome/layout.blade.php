@@ -87,13 +87,16 @@ function googleTranslateElementInit() {
                         @endauth
                         @endif
                         <li class="list-group-item py-2">
-                            <a href="/list-award">Awards</a>
-                        </li>
+                            <a href="/list-member">Members</a>
 			<li class="list-group-item py-2">
                             <a href="https://yb6-dxc.net/managers/" target="">Manager</a>
                         </li>
                         <li class="list-group-item py-2">
-                            <a href="/list-member">Members</a>
+                            <a href="/list-award">Awards</a>
+                        </li>
+                        <li class="list-group-item py-2">
+                            <a href="https://yb6-dxc.net/released-award-list/" target="">Released Award List</a>
+                        </li>
                         <li class="list-group-item py-2">
                             <a href="https://yb6-dxc.net/help-desk/" target="">Help Desk</a>
                         </li>

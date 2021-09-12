@@ -18,6 +18,8 @@
                 <p class="card-title fon-weight-bold">{{ $award->nama }}</p>
                 @if ($award->category == 'premium')
                 <p class="card-text text-success">Category : {{ ucfirst($award->category) }}</p>
+                @elseif($award->category == 'All member')
+                <p class="card-text text-default">Category : All Member</p>
                 @else
                 <p class="card-text text-primary">Category : {{ ucfirst($award->category) }}</p>
                 @endif

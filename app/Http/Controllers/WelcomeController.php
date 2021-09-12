@@ -125,6 +125,7 @@ class WelcomeController extends Controller
             'member_id' => $member[0]->member_id,
             'register' => $member[0]->register ? $member[0]->register : '-',
             'expired' => $member[0]->life_time == 1 ? 'Life Time' : date('Y-m-d', strtotime('+365 day', strtotime($member[0]->register))),
+            'life_time' => $member[0]->life_time
         ];
 
         $data['records'] = [];

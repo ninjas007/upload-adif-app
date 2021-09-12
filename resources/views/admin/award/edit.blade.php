@@ -43,6 +43,7 @@
                                     <select name="category_award" id="category_award" class="form-control">
                                     	<option value="free" {{ ($award->category == 'free') ? 'selected' : '' }}>Free</option>
                                     	<option value="premium" {{ ($award->category == 'premium') ? 'selected' : '' }}>Premium</option>
+                                    	<option value="All member" {{ ($award->category == 'All member') ? 'selected' : '' }}>All Member</option>
                                     </select>
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Submit">

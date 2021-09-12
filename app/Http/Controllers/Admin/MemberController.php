@@ -12,6 +12,7 @@ use App\UserAward;
 use App\Award;
 use App\User;
 use Auth;
+use Storage;
 
 class MemberController extends Controller
 {
@@ -67,39 +68,40 @@ class MemberController extends Controller
         {
             foreach ($members as $key => $member)
             {
-                $nestedData['member'] = '<a href="#" class="detail" data-id="'.$member->id.'" data-toggle="modal" data-target="#detailModal">'.$member->name.'  <br> '.$member->no_hp.'</a>';
+                if($member->id != 1) {
+                    $nestedData['member'] = '<a href="#" class="detail" data-id="'.$member->id.'" data-toggle="modal" data-target="#detailModal">'.$member->name.'  <br> '.$member->no_hp.'</a>';
 
-                if ($member->callsign == null) {
-                    $callsign = '-';
-                } else {
-                    $callsign = $member->callsign;
+                    if ($member->callsign == null) {
+                        $callsign = '-';
+                    } else {
+                        $callsign = $member->callsign;
+                    }
+    
+                    $nestedData['info'] = '<div class="font-weight-bold">Callsign : '.$callsign.'</div>';
+                    $nestedData['info'] .= '<div class="font-weight-bold">Kategori : '.ucfirst($member->category).'</div>';
+    
+                    if ($member->life_time == 1) {
+                        $nestedData['info'] .= 'Life Time : Aktif';
+                    }
+    
+                    if (!is_null($member->class_premium)) {
+                        $nestedData['info'] .= '<div class="font-weight-bold">Class Premium : '.ucfirst($member->class_premium).'</div>';
+                    }
+    
+                    $nestedData['registrasi'] = ($member->register == null) ? '-' : date('d M Y', strtotime($member->register));
+                    $nestedData['award'] = '<a href="/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
+                    $nestedData['action'] = '<a href="/admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
+                    $nestedData['action'] .= '<a href="/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
+    
+                    $data[] = $nestedData;   
                 }
-
-                $nestedData['info'] = '<div class="font-weight-bold">Callsign : '.$callsign.'</div>';
-                $nestedData['info'] .= '<div class="font-weight-bold">Kategori : '.ucfirst($member->category).'</div>';
-
-                if ($member->life_time == 1) {
-                    $nestedData['info'] .= 'Life Time : Aktif';
-                }
-
-                if (!is_null($member->class_premium)) {
-                    $nestedData['info'] .= '<div class="font-weight-bold">Class Premium : '.ucfirst($member->class_premium).'</div>';
-                }
-
-                $nestedData['registrasi'] = ($member->register == null) ? '-' : date('d M Y', strtotime($member->register));
-                $nestedData['award'] = '<a href="/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
-                $nestedData['action'] = '<a href="/admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
-                $nestedData['action'] .= '<a href="/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
-
-                $data[] = $nestedData;
-
             }
         }
           
         $json_data = array(
                     "draw"            => intval($request->input('draw')),  
-                    "recordsTotal"    => intval($totalData),  
-                    "recordsFiltered" => intval($totalFiltered), 
+                    "recordsTotal"    => intval($totalData - 1),  
+                    "recordsFiltered" => intval($totalFiltered - 1), 
                     "data"            => $data   
                     );
             
