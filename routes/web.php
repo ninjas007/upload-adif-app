@@ -56,11 +56,13 @@ Route::group(['middleware' => ['can:isMember', 'auth']], function() {
 });
 
 Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
-    
+
 	Route::get('admin', 'Admin\AdminController@index')->name('admin');
    Route::get('admin/listAdmin', 'Admin\AdminController@listAdmin')->name('admin/listAdmin');
    Route::get('admin/admin-tambah', 'Admin\AdminController@create')->name('admin/admin-tambah');
    Route::post('admin/admin-tambah', 'Admin\AdminController@store')->name('admin/admin-tambah');
+   Route::get('/admin/admin-edit/{id}', 'Admin\AdminController@edit');
+   Route::post('/admin/admin-update', 'Admin\AdminController@update');
    Route::get('/admin/admin-hapus/{id}', 'Admin\AdminController@destroy');
 
 	// admin award

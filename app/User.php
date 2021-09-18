@@ -17,16 +17,16 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
-        'email', 
-        'callsign', 
-        'password', 
-        'foto', 
-        'role', 
-        'category', 
+        'email',
+        'callsign',
+        'password',
+        'foto',
+        'role',
+        'category',
         'class_premium',
         'life_time',
-        'member_id', 
-        'register', 
+        'member_id',
+        'register',
         'active',
         'manager',
         'certificate'
@@ -58,5 +58,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userAwards()
     {
         return $this->belongsToMany('App\Award', 'user_awards');
+    }
+
+    /**
+     * Get the user that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function hak_akses(): BelongsTo
+    {
+        return $this->belongsTo(HakAkses::class, 'id', 'user_id');
     }
 }

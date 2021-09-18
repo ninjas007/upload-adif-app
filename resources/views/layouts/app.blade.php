@@ -102,6 +102,7 @@
     </div>
     @yield('js')
     <script type="text/Javascript">
+        var BASE_URL = `{{ url('') }}`;
         $('#preloader').fadeOut('slow');
     </script>
 </body>

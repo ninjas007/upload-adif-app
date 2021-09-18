@@ -37,7 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                              
+
                             </tbody>
                         </table>
                     </div>
@@ -60,7 +60,7 @@
             "processing": true,
             "serverSide": true,
             "ajax":{
-                     "url": "/admin/jsonAdminMembers",
+                     "url": BASE_URL+"/admin/jsonAdminMembers",
                      "dataType": "json",
                      "type": "POST",
                      "data":{ _token: "{{csrf_token()}}"}
@@ -87,7 +87,7 @@
         $('#myTable').on('click', '.detail', function(){
             let id = $(this).data('id')
             $.ajax({
-                url: '/admin/member/detail',
+                url: BASE_URL+'/admin/member/detail',
                 dataType: 'html',
                 data: {id: id},
                 success: function(response){

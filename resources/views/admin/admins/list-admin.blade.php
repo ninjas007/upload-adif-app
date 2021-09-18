@@ -36,7 +36,7 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>No Hp</th>
-                                        <th width="180" class="text-center">Hapus</th>
+                                        <th width="180" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +48,10 @@
                                             <td>{{ $user['name'] }}</td>
                                             <td>{{ $user['email'] }}</td>
                                             <td>{{ ($user['no_hp'] == null) ? '-' : $user['no_hp'] }}</td>
-                                            <td class="text-center"><a href="/admin/admin-hapus/{{ $user['id'] }}" class="btn btn-danger btn-sm">Hapus</a></td>
+                                            <td class="text-center">
+                                                <a href="{{ url('') }}/admin/admin-hapus/{{ $user['id'] }}" class="btn btn-danger btn-sm">Hapus</a>
+                                                <a href="{{ url('') }}/admin/admin-edit/{{ $user['id'] }}" class="btn btn-primary btn-sm">Edit</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     @endif

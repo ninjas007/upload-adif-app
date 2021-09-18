@@ -11,29 +11,43 @@ use Illuminate\Support\Facades\DB;
 use App\UserAward;
 use App\Award;
 use App\User;
+use App\HakAkses;
 use Auth;
 use Storage;
 
 class MemberController extends Controller
 {
+    private function hakAkses()
+    {
+        // hak akses untuk menu member
+        $hak_akses = HakAkses::where('user_id', auth()->user()->id)->where('menu', 'members')->first();
+        if($hak_akses == null) {
+            $return = json_encode([]);
+
+            return $return;
+        }
+        $fitur_akses = json_decode($hak_akses->fitur_akses);
+
+        return $fitur_akses;
+    }
 
     public function jsonAdminMembers(Request $request)
     {
         $columns = [
-            'name', 'category', 'callsign', 'class_premium', 'register'          
+            'name', 'category', 'callsign', 'class_premium', 'register'
         ];
-        
+
         $totalData = User::count();
-            
-        $totalFiltered = $totalData; 
+
+        $totalFiltered = $totalData;
 
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
-            
+
         if(empty($request->input('search.value')))
-        {            
+        {
             $members = User::offset($start)
                          ->limit($limit)
                          ->orderBy($order,$dir)
@@ -41,7 +55,7 @@ class MemberController extends Controller
         }
         // search
         else {
-            $search = $request->input('search.value'); 
+            $search = $request->input('search.value');
 
             $members =  User::where('id','LIKE',"%{$search}%")
                             ->orWhere('name', 'LIKE',"%{$search}%")
@@ -64,6 +78,11 @@ class MemberController extends Controller
         }
 
         $data = array();
+        $url = url('');
+
+        $fitur_akses = $this->hakAkses();
+
+
         if(!empty($members))
         {
             foreach ($members as $key => $member)
@@ -76,35 +95,50 @@ class MemberController extends Controller
                     } else {
                         $callsign = $member->callsign;
                     }
-    
+
                     $nestedData['info'] = '<div class="font-weight-bold">Callsign : '.$callsign.'</div>';
                     $nestedData['info'] .= '<div class="font-weight-bold">Kategori : '.ucfirst($member->category).'</div>';
-    
+
                     if ($member->life_time == 1) {
                         $nestedData['info'] .= 'Life Time : Aktif';
                     }
-    
+
                     if (!is_null($member->class_premium)) {
                         $nestedData['info'] .= '<div class="font-weight-bold">Class Premium : '.ucfirst($member->class_premium).'</div>';
                     }
-    
+
                     $nestedData['registrasi'] = ($member->register == null) ? '-' : date('d M Y', strtotime($member->register));
-                    $nestedData['award'] = '<a href="/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
-                    $nestedData['action'] = '<a href="/admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
-                    $nestedData['action'] .= '<a href="/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
-    
-                    $data[] = $nestedData;   
+                    if(isset($fitur_akses->award)) {
+                        $nestedData['award'] = '<a href="'.$url.'/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
+                    } else {
+                        $nestedData['award'] = '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                    }
+
+                    if(isset($fitur_akses->update)) {
+                        $nestedData['action'] = '<a href="'.$url.'/admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
+                    } else {
+                        $nestedData['action'] = '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                    }
+
+
+                    if(isset($fitur_akses->delete)) {
+                        $nestedData['action'] .= '<a href="'.$url.'/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
+                    } else {
+                        $nestedData['action'] .= '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                    }
+
+                    $data[] = $nestedData;
                 }
             }
         }
-          
+
         $json_data = array(
-                    "draw"            => intval($request->input('draw')),  
-                    "recordsTotal"    => intval($totalData - 1),  
-                    "recordsFiltered" => intval($totalFiltered - 1), 
-                    "data"            => $data   
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData - 1),
+                    "recordsFiltered" => intval($totalFiltered - 1),
+                    "data"            => $data
                     );
-            
+
         return response()->json($json_data);
     }
 
@@ -128,7 +162,7 @@ class MemberController extends Controller
     public function create()
     {
         $this->checkAdmin();
-        
+
         return view('admin.member.create');
     }
 
@@ -146,7 +180,7 @@ class MemberController extends Controller
 
     /**
      * Tambah data user
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -209,14 +243,14 @@ class MemberController extends Controller
                 if (is_null($request->post('link_googledrive')[$i])) {
                    continue;
                 }
-               
+
                 $data[] = [
                    'award_id' => $request->post('award_id')[$i],
                    'user_id' => $id,
                    'link_googledrive' => $request->post('link_googledrive')[$i]
                 ];
             }
-            
+
             UserAward::insert($data);
         }
 
@@ -231,6 +265,13 @@ class MemberController extends Controller
      */
     public function view($id)
     {
+        // $fitur_akses = $this->hakAkses();
+
+        // // jika update award di klik cek apakah ada hak akses dari user ini
+        // if($fitur_akses->award != 'on') {
+        //     die('Not Access');
+        // }
+
         $data['id'] = $id;
         $data['awards'] = Award::get();
         $data['userAwards'] = UserAward::where('user_id', $id)->get();
@@ -240,6 +281,13 @@ class MemberController extends Controller
 
     public function edit($id)
     {
+        // $fitur_akses = $this->hakAkses();
+
+        // // jika update update di klik cek apakah ada hak akses dari user ini
+        // if(!isset($fitur_akses->update)) {
+        //     die('Not Access');
+        // }
+
         $user = User::where('id', $id)->first();
 
         return view('admin.member.edit', compact('user'));
@@ -247,6 +295,13 @@ class MemberController extends Controller
 
     public function updateUser(Request $request)
     {
+        // $fitur_akses = $this->hakAkses();
+
+        // // jika update update di klik cek apakah ada hak akses dari user ini
+        // if(!isset($fitur_akses->update)) {
+        //     die('Not Access');
+        // }
+
         $rules = [
             'nama' => 'required|string|max:100',
             'email' => 'required|string|max:255',
@@ -285,6 +340,13 @@ class MemberController extends Controller
 
     public function destroy($id)
     {
+        $fitur_akses = $this->hakAkses();
+
+        // jika update update di klik cek apakah ada hak akses dari user ini
+        if(!isset($fitur_akses->delete)) {
+            die('Not Access');
+        }
+
         $this->checkAdmin();
 
         $user = User::findOrFail($id);
@@ -310,4 +372,4 @@ class MemberController extends Controller
             die;
         }
     }
-}   
+}
