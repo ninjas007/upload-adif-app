@@ -14,11 +14,12 @@ use App\UserAdif;
 |
 */
 
-Route::get('/api/memberbaru', 'API\MemberController@create');
+Route::get('/api/newmember', 'API\MemberController@create');
 Route::get('/api/members', 'API\MemberController@getMembers');
 Route::get('/api/member/{id}', 'API\MemberController@getMemberById');
 Route::get('/api/member/{start}/{limit}', 'API\MemberController@getMemberByOffset');
-Route::get('/api/delete_member', 'API\MemberController@deleteMember');
+Route::get('/api/deletemember', 'API\MemberController@deleteMember');
+Route::get('/api/updatemember', 'API\MemberController@update');
 
 
 Route::get('/', 'WelcomeController@index');

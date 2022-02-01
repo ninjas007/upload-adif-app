@@ -39,7 +39,7 @@ class MemberController extends Controller
     public function create(Request $request)
     {
         if($this->checkAdmin($request)) {
-            $user_email = $request->newmember_email ?? null;
+            $user_email = $request->email ?? null;
             
             if($user_email == null){
                 return response()->json(['error' => 'email member tidak boleh kosong'], 401);
@@ -52,15 +52,70 @@ class MemberController extends Controller
             }
 
             $user = new User;
-            $user->name = $request->new_name ?? $user_email;
-            $user->callsign = $request->new_callsign ?? null;
-            $user->register = $request->registerdate ?? null;
+            $user->name = $request->name ?? $user_email;
+            $user->callsign = $request->callsign ?? null;
+            $user->register = $request->register ?? null;
             $user->member_id = $request->member_id ?? null;
             $user->email = $user_email;
             $user->password = Hash::make('amatir123');
             $user->category = $request->category ?? 'free';
             $user->role = 1;
             $user->foto = 'profile.jpg';
+            $user->class_premium = $request->class_premium ?? null;
+            $user->life_time = $request->life_time ?? 0;
+            $user->register = $request->register ?? null;
+            $user->active = $request->active ?? 0;
+            $user->no_hp = $request->no_hp ?? null;
+            
+            
+            $user->save();
+
+            $user_get = User::where('email', $user_email)->first();
+
+            $data = [
+                'email' => $user_get->email,
+                'password' => $user_get->password,
+            ];
+
+            return response()->json($data);
+        }
+
+        return response()->json(['error' => 'email admin atau password admin salah'], 401);
+
+    }
+
+    public function update(Request $request)
+    {
+        if($this->checkAdmin($request)) {
+            $user_email = $request->email ?? null;
+            
+            if($user_email == null){
+                return response()->json(['error' => 'email member tidak boleh kosong'], 401);
+            }
+
+            // $check = User::where('email', $user_email)->first();
+
+            // if($check) {
+            //     return response()->json(['error' => 'Email ada yang sama'], 401);
+            // }
+
+            $user = User::where('callsign',  $request->callsign)->first();
+            $user->name = $request->name ?? $user_email;
+            $user->callsign = $request->callsign ?? null;
+            $user->register = $request->register ?? null;
+            $user->member_id = $request->member_id ?? null;
+            $user->email = $user_email;
+            $user->password = Hash::make('amatir123');
+            $user->category = $request->category ?? 'free';
+            $user->role = 1;
+            $user->foto = 'profile.jpg';
+            $user->class_premium = $request->class_premium ?? null;
+            $user->life_time = $request->life_time ?? 0;
+            $user->register = $request->register ?? null;
+            $user->active = $request->active ?? 0;
+            $user->no_hp = $request->no_hp ?? null;
+            
+            
             $user->save();
 
             $user_get = User::where('email', $user_email)->first();
