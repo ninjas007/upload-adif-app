@@ -20,6 +20,7 @@ Route::get('/api/member/{id}', 'API\MemberController@getMemberById');
 Route::get('/api/member/{start}/{limit}', 'API\MemberController@getMemberByOffset');
 Route::get('/api/delete_member', 'API\MemberController@deleteMember');
 
+
 Route::get('/', 'WelcomeController@index');
 Route::get('/list-award', 'WelcomeController@index');
 Route::get('/list-member', 'WelcomeController@members');
@@ -64,7 +65,7 @@ Route::group(['middleware' => ['can:isMember', 'auth']], function() {
 });
 
 Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
-
+    
 	Route::get('admin', 'Admin\AdminController@index')->name('admin');
    Route::get('admin/listAdmin', 'Admin\AdminController@listAdmin')->name('admin/listAdmin');
    Route::get('admin/admin-tambah', 'Admin\AdminController@create')->name('admin/admin-tambah');

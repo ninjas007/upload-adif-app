@@ -24,15 +24,15 @@ class AwardController extends Controller
 
             $request->session()->regenerateToken();
 
-            return redirect('login')->with('error', 'Sorry your account is inactive or your membership is no longer valid. please <a href="https://yb6-dxc.net/contact-us/">contact us</a>');
+            return redirect('login')->with('error', 'Sorry your account is inactive or your membership is no longer valid. please <a href="https://yb6-dxc.net/contact-us/">contact us</a>');    
         }
 
         // $awards = Award::with('userAwards')->get()->toArray();
 
         return view('award');
     }
-
-    public function jsonAwards(Request $request)
+    
+     public function jsonAwards(Request $request)
     {
         $columns = ['nama', 'url_award'];
 
@@ -78,9 +78,9 @@ class AwardController extends Controller
 
                 $mess = 'Process / Unclaimed';
                 $cd = '<button type="button" title="Click to check award" class="btn btn-success btn-sm" disabled>Download</button>';
-
-                if ($award->user_awards) {
-                    foreach ($award->user_awards as $user_award) {
+            
+                if ($award->userAwards) {
+                    foreach ($award->userAwards as $user_award) {
                         if(Auth::user()->id == $user_award->user_id && $award->id == $user_award->award_id) {
                             $mess = 'Success';
                             $cd = '<a href="'.$user_award->link_googledrive.'" title="Click to download award" class="btn btn-primary btn-sm">DOWNLOAD</a>';
@@ -149,7 +149,7 @@ class AwardController extends Controller
             $data['call'] = 0;
             $data['band'] = 0;
             $data['mode'] = 0;
-
+           
             foreach (json_decode($userAdif->data_adif) as $record) {
 
                 $call = json_decode($rule['call']);

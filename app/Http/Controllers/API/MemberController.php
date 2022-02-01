@@ -40,7 +40,7 @@ class MemberController extends Controller
     {
         if($this->checkAdmin($request)) {
             $user_email = $request->newmember_email ?? null;
-
+            
             if($user_email == null){
                 return response()->json(['error' => 'email member tidak boleh kosong'], 401);
             }
@@ -76,7 +76,7 @@ class MemberController extends Controller
         return response()->json(['error' => 'email admin atau password admin salah'], 401);
 
     }
-
+    
     public function deleteMember(Request $request)
     {
         if($this->checkAdmin($request)) {

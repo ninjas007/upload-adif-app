@@ -45,8 +45,6 @@
         $.noConflict();
         // $('#myTable').DataTable();
 
-        // $('#myTable').DataTable();
-
         $('#myTable').DataTable({
             "processing": true,
             "serverSide": true,

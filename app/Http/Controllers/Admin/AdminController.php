@@ -34,7 +34,7 @@ class AdminController extends Controller
 
         return view('admin.award.index', compact('awards'));
     }
-
+    
     public function edit(Request $request, $id)
     {
         $data['user'] = User::findOrFail($id);

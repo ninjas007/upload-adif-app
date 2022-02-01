@@ -68,8 +68,8 @@ class AwardController extends Controller
         return redirect('admin/awards')->with('success', 'Berhasil menambah award');
 
     }
-
-    public function jsonAwardMembers(Request $request)
+    
+      public function jsonAwardMembers(Request $request)
     {
         $columns = ['nama'];
 
