@@ -26,27 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($awards as $award)
-                                <tr>
-                                    <td>{{ $award['nama'] }} <br> <a href="{{ $award['url_award'] }}" title="click here for details award" target="_blank" class="text-danger">Click Here</a></td>
-                                    <td>{{ strtoupper($award['category']) }}</td>
-                                        @php
-                                            $mess = 'Process / Unclaimed';
-                                            $cd = '<button type="button" title="Click to check award" class="btn btn-success btn-sm" disabled>Download</button>';
-                                            if ($award['user_awards']) {
-                                                foreach ($award['user_awards'] as $user_award) {
-                                                    if(Auth::user()->id == $user_award['user_id'] && $award['id'] == $user_award['award_id']) {
-                                                        $mess = 'Success';
-                                                        $cd = '<a href="'.$user_award['link_googledrive'].'" title="Click to download award" class="btn btn-primary btn-sm">DOWNLOAD</a>';
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                        @endphp
-                                    <td>{{ $mess }}</td>
-                                    <td class="text-center">{!! $cd !!}</td>
-                                </tr>
-                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -63,9 +43,38 @@
 <script type="text/Javascript">
     $(document).ready( function () {
         $.noConflict();
-        $('#myTable').DataTable();
+        // $('#myTable').DataTable();
 
-        $('.check').on('click', function(){
+        // $('#myTable').DataTable();
+
+        $('#myTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                     "url": BASE_URL+"/jsonAwards",
+                     "dataType": "json",
+                     "type": "POST",
+                     "data":{ _token: "{{csrf_token()}}"}
+                   },
+            "columns": [
+                { "data": "claim_award" },
+                { "data": "category" },
+                { "data": "claim_status" },
+                { "data": "download" }
+            ],
+            "columnDefs" : [
+                {
+                    "targets": -2,
+                    "className": 'text-center'
+                },
+                {
+                    "targets": -1,
+                    "className": 'text-center'
+                }
+            ]
+        });
+
+        $('#myTable').on('click', '.check', function(){
             $.ajax({
                 url: '/checkAwardToClaim',
                 dataType: 'json',
@@ -89,9 +98,9 @@
                                     <hr> ${response.rule}`;
 
                     swal({
-                        title: "Report", 
+                        title: "Report",
                         content: div,
-                        allowOutsideClick: "true" 
+                        allowOutsideClick: "true"
                     })
                     .then(()=>{
                         if (response.rule == '<div class="text-success">FULFILLED</div>') {
@@ -104,9 +113,9 @@
                     const div = document.createElement("div");
                     div.innerHTML = `<p>${err.responseJSON.message}</p>`;
                     swal({
-                        title: "Report", 
+                        title: "Report",
                         content: div,
-                        allowOutsideClick: "true" 
+                        allowOutsideClick: "true"
                     });
                 }
             })

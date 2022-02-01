@@ -14,12 +14,20 @@ use App\UserAdif;
 |
 */
 
+Route::get('/api/memberbaru', 'API\MemberController@create');
+Route::get('/api/members', 'API\MemberController@getMembers');
+Route::get('/api/member/{id}', 'API\MemberController@getMemberById');
+Route::get('/api/member/{start}/{limit}', 'API\MemberController@getMemberByOffset');
+Route::get('/api/delete_member', 'API\MemberController@deleteMember');
+
 Route::get('/', 'WelcomeController@index');
 Route::get('/list-award', 'WelcomeController@index');
 Route::get('/list-member', 'WelcomeController@members');
 Route::get('/detailMember', 'WelcomeController@jsonDetailMember');
 Route::post('/jsonMembers', 'WelcomeController@jsonMembers');
 Route::post('/admin/jsonAdminMembers', 'Admin\MemberController@jsonAdminMembers');
+Route::post('/admin/jsonAwardsMember', 'Admin\AwardController@jsonAwardMembers');
+Route::post('/jsonAwards', 'AwardController@jsonAwards');
 
 Route::get('/bersihkan', function () {
     $clearcache = Artisan::call('cache:clear');
@@ -101,5 +109,3 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
    Route::post('/admin/rules/store', 'Admin\RulesController@store');
    Route::get('/admin/rules/hapus/{id}', 'Admin\RulesController@destroy');
 });
-
-Route::get('/api/members', 'API\MemberController@getMembers');

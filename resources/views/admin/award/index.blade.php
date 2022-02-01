@@ -40,22 +40,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (count($awards) == 0)
-                                        <tr><td colspan="5" style="text-align: center;">Belum ada data</td></tr>
-                                    @endif
-                                    @foreach ($awards as $award)
-                                        <tr>
-                                            <td>
-                                                <a href="{{ $award->url_award }}" title="Klik untuk melihat award" target="_blank">{{ $award->nama }}</a>
-                                            </td>
-                                            <td>{{ strtoupper($award->category) }}</td>
-                                            <td><img src="{{ $award->url_gambar }}" width="100"></td>
-                                            <td class="text-center">
-                                                <a href="/admin/award/ubah/{{ $award->uuid }}" class="btn btn-sm btn-primary">Ubah</a>
-                                                <a href="/admin/award/hapus/{{ $award->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus award ini?')">Hapus</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -72,9 +57,54 @@
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/Javascript">
-    $(document).ready( function () {
+    $(function() {
         $.noConflict();
-        $('#myTable').DataTable();
-    } );
+        // $('#myTable').DataTable();
+
+        $('#myTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                     "url": BASE_URL+"/admin/jsonAwardsMember",
+                     "dataType": "json",
+                     "type": "POST",
+                     "data":{ _token: "{{csrf_token()}}"}
+                   },
+            "columns": [
+                { "data": "award" },
+                { "data": "category" },
+                { "data": "image" },
+                { "data": "action" }
+            ],
+            "columnDefs" : [
+                {
+                    "targets": -2,
+                    "className": 'text-center'
+                },
+                {
+                    "targets": -1,
+                    "className": 'text-center'
+                }
+            ]
+        });
+
+    })
 </script>
 @endsection
+
+ {{-- @if (count($awards) == 0)
+                                        <tr><td colspan="5" style="text-align: center;">Belum ada data</td></tr>
+                                    @endif
+                                    @foreach ($awards as $award)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ $award->url_award }}" title="Klik untuk melihat award" target="_blank">{{ $award->nama }}</a>
+                                            </td>
+                                            <td>{{ strtoupper($award->category) }}</td>
+                                            <td><img src="{{ $award->url_gambar }}" width="100"></td>
+                                            <td class="text-center">
+                                                <a href="/admin/award/ubah/{{ $award->uuid }}" class="btn btn-sm btn-primary">Ubah</a>
+                                                <a href="/admin/award/hapus/{{ $award->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus award ini?')">Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach --}}
