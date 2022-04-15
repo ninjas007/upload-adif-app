@@ -66,7 +66,7 @@ class UploadController extends Controller
         // );
 
         $user = User::where('id', Auth::user()->id)->first();
-        
+
          $data = [
             'nama' => $user->name,
             'no_hp' => $user->no_hp,
@@ -90,6 +90,6 @@ class UploadController extends Controller
             'msg' => 'QSO LOGS was Successfully Updated from ADIF to Database, And your award application has been completed automatically. Please allow time for our managers to check in a maximum of 7 working days to check the award',
             'status' => 200
         ], 200);
-        
+
     }
 }

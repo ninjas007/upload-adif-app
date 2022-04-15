@@ -12,7 +12,7 @@
                     <form action="{{ route('admin/member-tambah') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-md-12 pt-md-4">                                
+                            <div class="col-md-12 pt-md-4">
                                 @if ($errors->any())
                                     @foreach ($errors->all() as $error)
                                         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -36,21 +36,22 @@
                                     <input type="text" class="form-control" name="callsign" id="callsign" placeholder="Callsign">
                                 </div>
                                 <div class="form-group">
-                                    <label for="member_id">Member Id</label>
-                                    <input type="text" class="form-control" name="member_id" id="member_id" placeholder="Member Id">
-                                </div>
-                                <div class="form-group">
                                     <label for="register">Register</label>
                                     <input type="date" id="register" name="register" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="expired">Expired</label>
+                                    <input type="date" id="expired" name="expired" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="member_id">Member Id</label>
+                                    <input type="text" class="form-control" name="member_id" id="member_id" placeholder="Member Id">
+                                </div>
+                                <div class="form-group">
                                     <label for="category">Kategori</label>
-                                    <select name="category" id="category" class="form-control">
-                                        <option value="free">Free</option>
-                                        <option value="premium">Premium</option>
-                                    </select>
+                                    <input type="text" name="category" id="category" class="form-control" readonly value="premium">
                                 </div>
                                 <div class="form-group life_time" style="display: none">
                                     <label for="life_time">Life Time</label>
@@ -59,7 +60,7 @@
                                         <option value="1">Aktif</option>
                                     </select>
                                 </div>
-                                <div class="form-group c_premium" style="display: none">
+                                <div class="form-group c_premium">
                                     <label for="class_premium">Class Premium</label>
                                     <select name="class_premium" id="class_premium" class="form-control">
                                         <option value="" selected>Pilih class premium</option>
@@ -69,10 +70,10 @@
                                         <option value="early class">Early Class Premium Member</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="password">Password</label>
                                     <input type="text" class="form-control" name="password" id="password" placeholder="Password">
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="certificate">Certificate Member</label>
                                     <input type="text" class="form-control" name="certificate" id="certificate" placeholder="link google drive">

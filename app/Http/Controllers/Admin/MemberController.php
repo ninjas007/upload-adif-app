@@ -14,9 +14,16 @@ use App\User;
 use App\HakAkses;
 use Auth;
 use Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\KirimCeritificate;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admins')->only(['create', 'destroy']);
+    }
+
     private function hakAkses()
     {
         // hak akses untuk menu member
@@ -108,23 +115,34 @@ class MemberController extends Controller
                     }
 
                     $nestedData['registrasi'] = ($member->register == null) ? '-' : date('d M Y', strtotime($member->register));
+                    // if(isset($fitur_akses->award)) {
+                    //     $nestedData['award'] = '<a href="'.$url.'/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
+                    // } else {
+                    //     // $nestedData['award'] = '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                    //     $nestedData['award'] = '';
+                    // }
+
+                    $nestedData['status_kirim'] = ($member->is_kirim == 1) ? '<span class="badge badge-success">Sudah</span>' : '<span class="badge badge-danger">Belum</span>';
+
                     if(isset($fitur_akses->award)) {
-                        $nestedData['award'] = '<a href="'.$url.'/admin/member/award-update/'.$member->id.'" class="btn btn-success btn-sm">Update</a>';
+                        $nestedData['action'] = '<a href="javascript:void(0)" class="badge badge-success p-2" onclick="kirimCertificate(`'.$member->id.'`)">Send</a> ';
                     } else {
-                        $nestedData['award'] = '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                        $nestedData['action'] = '';
                     }
 
                     if(isset($fitur_akses->update)) {
-                        $nestedData['action'] = '<a href="'.$url.'/admin/member/edit/'.$member->id.'" class="btn btn-primary btn-sm text-center mr-2">Edit</a>';
+                        $nestedData['action'] .= ' <a href="'.$url.'/admin/member/edit/'.$member->id.'" class="badge badge-primary p-2 text-center mr-2">Edit</a>';
                     } else {
-                        $nestedData['action'] = '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                        // $nestedData['action'] = '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                        $nestedData['action'] .= '';
                     }
 
 
                     if(isset($fitur_akses->delete)) {
-                        $nestedData['action'] .= '<a href="'.$url.'/admin/member/hapus/'.$member->id.'" class="btn btn-danger btn-sm text-center">Hapus</a>';
+                        $nestedData['action'] .= '<a href="'.$url.'/admin/member/hapus/'.$member->id.'" class="badge badge-danger p-2 text-center">Delete</a>';
                     } else {
-                        $nestedData['action'] .= '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                        // $nestedData['action'] .= '<a href="#" class="btn btn-success btn-sm">Not Access</a>';
+                        $nestedData['action'] .= '';
                     }
 
                     $data[] = $nestedData;
@@ -161,8 +179,6 @@ class MemberController extends Controller
      */
     public function create()
     {
-        $this->checkAdmin();
-
         return view('admin.member.create');
     }
 
@@ -190,7 +206,6 @@ class MemberController extends Controller
             'nama' => 'required|string|max:100',
             'email' => 'required|string|max:255|unique:users',
             'callsign' => 'required|string|min:4|max:10|unique:users',
-            'password' => 'required|string|min:8',
             'category' => 'required|string',
             'member_id' => 'required|string|max:20'
         ];
@@ -206,13 +221,14 @@ class MemberController extends Controller
             'name' => $request->nama,
             'email' => $request->email,
             'callsign' => $request->callsign,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('amatir123'),
             'category' => $request->category,
             'class_premium' => $request->class_premium,
             'life_time' => $request->life_time,
             'role' => 1,
             'foto' => 'profile.jpg',
             'register' => $request->register,
+            'expired' => $request->expired,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
             'certificate' => $request->certificate
@@ -325,6 +341,7 @@ class MemberController extends Controller
         $user->class_premium = $request->class_premium;
         $user->life_time = $request->life_time;
         $user->register = $request->register;
+        $user->expired = $request->expired;
         $user->active = $request->active;
         $user->updated_at = date('Y-m-d H:i:s');
         $user->certificate = $request->certificate;
@@ -347,8 +364,6 @@ class MemberController extends Controller
             die('Not Access');
         }
 
-        $this->checkAdmin();
-
         $user = User::findOrFail($id);
         $userAwards = UserAward::where('user_id', $id)->get();
 
@@ -365,11 +380,46 @@ class MemberController extends Controller
         return redirect('admin/members')->with('success', 'Berhasil menghapus member');
     }
 
-    private function checkAdmin()
+    public function kirimCertificate(Request $request)
     {
-        if (Auth::user()->manager == 1 && Auth::user()->category == 'admin') {
-            echo 'Bukan super admin';
-            die;
+        $user = User::findOrFail($request->id);
+
+        if(empty($user))  {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'User not found'
+            ]);
         }
+
+        $is_kirim = $this->kirimEmail($user);
+
+        if($is_kirim) {
+            $status_code = 200;
+            $message = 'Sent email success';
+
+            $user->is_kirim = 1;
+            $user->save();
+        } else {
+            $status_code = 500;
+            $message = 'Sent email error. Please contact admin';
+        }
+
+        return response()->json([
+            'status_code' => $status_code,
+            'message' => $message
+        ]);
+    }
+
+    private function kirimEmail($user)
+    {
+        $return = true;
+        try {
+            $kirim_email = Mail::to('tiliztiadi@gmail.com')->send(new KirimCeritificate($user));
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            $return = false;
+        }
+
+        return $return;
     }
 }

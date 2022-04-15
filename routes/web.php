@@ -65,8 +65,10 @@ Route::group(['middleware' => ['can:isMember', 'auth']], function() {
    Route::get('/checkAwardToClaim', 'AwardController@checkAwardToClaim');
 });
 
+Route::get('member/certificate/', 'MemberController@certificate');
+
 Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
-    
+
 	Route::get('admin', 'Admin\AdminController@index')->name('admin');
    Route::get('admin/listAdmin', 'Admin\AdminController@listAdmin')->name('admin/listAdmin');
    Route::get('admin/admin-tambah', 'Admin\AdminController@create')->name('admin/admin-tambah');
@@ -95,6 +97,8 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
    Route::post('admin/member/award-store/{id}', 'Admin\MemberController@store');
    Route::get('admin/member/award-ubah/{id}', 'Admin\MemberController@ubah');
    Route::put('admin/member/award-update/{id}', 'Admin\MemberController@update');
+   Route::get('admin/member/kirim-certificate', 'Admin\MemberController@kirimCertificate');
+
 
    // admin banner
    Route::get('admin/banners', 'Admin\BannerController@index')->name('admin/banners');

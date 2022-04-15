@@ -32,7 +32,7 @@
                                     <th width="180">Member</th>
                                     <th>Info</th>
                                     <th width="150">Registrasi</th>
-                                    <th style="text-align: center;" width="100">Award</th>
+                                    <th style="text-align: center;" width="100">Status Kirim</th>
                                     <th style="text-align: center;" width="140">Action</th>
                                 </tr>
                             </thead>
@@ -51,6 +51,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/Javascript">
     $(function() {
         $.noConflict();
@@ -69,7 +70,7 @@
                 { "data": "member" },
                 { "data": "info" },
                 { "data": "registrasi" },
-                { "data": "award" },
+                { "data": "status_kirim" },
                 { "data": "action" }
             ],
             "columnDefs" : [
@@ -97,5 +98,43 @@
             })
         });
     })
+
+    function kirimCertificate(id)
+    {
+        $.ajax({
+            url: BASE_URL+'/admin/member/kirim-certificate',
+            data: {
+                id: id
+            },
+            success: function(data){
+                if(data.status_code == 200) {
+                    title = 'Berhasil';
+                    type = 'success';
+                } else {
+                    title = 'Gagal';
+                    type = 'error';
+                }
+
+                swal({
+                    title: title,
+                    text: data.message,
+                    icon: icon,
+                    button: "Ok",
+                }).then(() => {
+                    location.reload();
+                });
+            },
+            error: function(err) {
+                swal({
+                    title: 'Gagal',
+                    text: 'Certificate gagal dikirim, silahkan hubungi admin',
+                    icon: 'error',
+                    button: "Ok",
+                }).then(() => {
+                    location.reload();
+                });
+            }
+        });
+    }
 </script>
 @endsection
