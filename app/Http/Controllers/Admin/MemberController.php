@@ -414,7 +414,7 @@ class MemberController extends Controller
     {
         $return = true;
         try {
-            $kirim_email = Mail::to('tiliztiadi@gmail.com')->send(new KirimCeritificate($user));
+            $kirim_email = Mail::to($user->email)->send(new KirimCeritificate($user));
         } catch (\Exception $e) {
             // dd($e->getMessage());
             $return = false;
