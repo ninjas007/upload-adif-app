@@ -65,6 +65,7 @@
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/listAdmin') }}">Administrator</a></li>
                                 @endif
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/setting') }}">Setting</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/admin/billing') }}">Billing</a></li>
                             </li>
                             @endcan
                         @endguest

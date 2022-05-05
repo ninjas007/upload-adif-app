@@ -34,7 +34,7 @@ class AdminController extends Controller
 
         return view('admin.award.index', compact('awards'));
     }
-    
+
     public function edit(Request $request, $id)
     {
         $data['user'] = User::findOrFail($id);
@@ -87,8 +87,8 @@ class AdminController extends Controller
 
             return redirect()->to('admin/admin-edit/'.$request->user_id)->with('success', 'Berhasil menyimpan data admin');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
+            dd($e);
         }
 
     }

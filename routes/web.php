@@ -87,17 +87,20 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
 
 	// admin member
 	Route::get('admin/members', 'Admin\MemberController@index')->name('admin/members');
-   Route::get('admin/member/tambah', 'Admin\MemberController@create')->name('admin/member-tambah');
-   Route::post('admin/member/tambah', 'Admin\MemberController@tambah')->name('admin/member-tambah');
-   Route::get('admin/member/detail', 'Admin\MemberController@show');
-   Route::get('admin/member/edit/{id}', 'Admin\MemberController@edit');
-   Route::put('admin/member/update', 'Admin\MemberController@updateUser')->name('admin/member/update');
-   Route::get('admin/member/hapus/{id}', 'Admin\MemberController@destroy');
-   Route::get('admin/member/award-update/{id}', 'Admin\MemberController@view');
-   Route::post('admin/member/award-store/{id}', 'Admin\MemberController@store');
-   Route::get('admin/member/award-ubah/{id}', 'Admin\MemberController@ubah');
-   Route::put('admin/member/award-update/{id}', 'Admin\MemberController@update');
-   Route::get('admin/member/kirim-certificate', 'Admin\MemberController@kirimCertificate');
+    Route::get('admin/member/tambah', 'Admin\MemberController@create')->name('admin/member-tambah');
+    Route::post('admin/member/tambah', 'Admin\MemberController@tambah')->name('admin/member-tambah');
+    Route::get('admin/member/detail', 'Admin\MemberController@show');
+
+    Route::group(['middleware' => 'member_akses'], function () {
+        Route::get('admin/member/edit/{id}', 'Admin\MemberController@edit');
+        Route::put('admin/member/update', 'Admin\MemberController@updateUser')->name('admin/member/update');
+        Route::get('admin/member/hapus/{id}', 'Admin\MemberController@destroy');
+        Route::get('admin/member/award-update/{id}', 'Admin\MemberController@view');
+        Route::post('admin/member/award-store/{id}', 'Admin\MemberController@store');
+        Route::get('admin/member/award-ubah/{id}', 'Admin\MemberController@ubah');
+        Route::put('admin/member/award-update/{id}', 'Admin\MemberController@update');
+        Route::get('admin/member/kirim-certificate', 'Admin\MemberController@kirimCertificate');
+    });
 
 
    // admin banner
@@ -114,4 +117,6 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
    Route::get('/admin/rules/tambah', 'Admin\RulesController@create');
    Route::post('/admin/rules/store', 'Admin\RulesController@store');
    Route::get('/admin/rules/hapus/{id}', 'Admin\RulesController@destroy');
+
+   Route::get('/admin/billing', 'Admin\BillingController@billing');
 });
