@@ -125,7 +125,7 @@ class MemberController extends Controller
                     $nestedData['status_kirim'] = ($member->is_kirim == 1) ? '<span class="badge badge-success">Sudah</span>' : '<span class="badge badge-danger">Belum</span>';
 
                     if(isset($fitur_akses->award)) {
-                        $nestedData['action'] = '<a href="javascript:void(0)" class="badge badge-success p-2" onclick="kirimCertificate(`'.$member->id.'`)">Send</a> ';
+                        $nestedData['action'] = '<a href="javascript:void(0)" class="badge badge-success p-2" onclick="kirimCertificate(`'.$member->id.'`)">Kirim Certificate</a> ';
                     } else {
                         $nestedData['action'] = '';
                     }

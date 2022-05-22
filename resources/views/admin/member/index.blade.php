@@ -32,8 +32,8 @@
                                     <th width="180">Member</th>
                                     <th>Info</th>
                                     <th width="150">Registrasi</th>
-                                    <th style="text-align: center;" width="100">Status Kirim</th>
-                                    <th style="text-align: center;" width="140">Action</th>
+                                    <th style="text-align: center;" width="100">Status Kirim Ceritificate</th>
+                                    <th style="text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

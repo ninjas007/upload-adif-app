@@ -118,5 +118,8 @@ Route::group(['middleware' => ['can:isAdmin', 'auth']], function () {
    Route::post('/admin/rules/store', 'Admin\RulesController@store');
    Route::get('/admin/rules/hapus/{id}', 'Admin\RulesController@destroy');
 
-   Route::get('/admin/billing', 'Admin\BillingController@billing');
+   Route::get('/admin/billing', 'Admin\BillingController@index');
+   Route::get('/admin/billing/tambah', 'Admin\BillingController@create');
+   Route::get('/admin/billing/get-data', 'Admin\BillingController@getDataJson');
+   Route::get('/admin/billing/kirim-tagihan', 'Admin\BillingController@kirimTagihan');
 });
