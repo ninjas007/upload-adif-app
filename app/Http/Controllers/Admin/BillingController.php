@@ -111,32 +111,37 @@ class BillingController extends Controller
     public function kirimTagihan(Request $request)
     {
         $user = User::find($request->user_id);
+        try {
 
-        if(empty($user))  {
+            if(empty($user))  {
+                return response()->json([
+                    'status_code' => 400,
+                    'message' => 'User not found'
+                ]);
+            }
+
+            $is_kirim = $this->kirimEmail($user);
+
+            if($is_kirim) {
+                $status_code = 200;
+                $message = 'Sent email success';
+
+                $this->updateAwardClass($request, $user);
+            } else {
+                $status_code = 500;
+                $message = 'Sent email error. Please contact admin';
+            }
+
             return response()->json([
-                'status_code' => 400,
-                'message' => 'User not found'
+                'status_code' => $status_code,
+                'message' => $message
             ]);
+
+        } catch (\Exception $e) {
+            if(config('app.debug')) dd($e->getMessage());
+
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-
-        $is_kirim = $this->kirimEmail($user);
-
-        if($is_kirim) {
-            $status_code = 200;
-            $message = 'Sent email success';
-
-            $this->updateAwardClass($request, $user);
-        } else {
-            $status_code = 500;
-            $message = 'Sent email error. Please contact admin';
-        }
-
-        return response()->json([
-            'status_code' => $status_code,
-            'message' => $message
-        ]);
-
-        return response()->json($data);
     }
 
     private function kirimEmail($user)
