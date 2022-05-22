@@ -8,7 +8,7 @@
             text-align: center;
         }
         .wrap {
-            line-height: 1.7;
+            line-height: 1.6;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             border: 1px solid #e3d3d3;
             width: 50%;
@@ -18,6 +18,7 @@
             margin-right: auto;
             padding: 10px;
             background-color: #e8f0fe;
+            font-size: 14px;
         }
     </style>
 </head>
