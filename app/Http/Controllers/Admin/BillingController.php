@@ -86,10 +86,10 @@ class BillingController extends Controller
                                                     <option value="early class">Early Class</option>
                                             </select>';
 
-                $nestedData['status_kirim'] = $member->status_kirim_billing_gold == 1 ? 'Gold: <span class="text-succes">Sudah</span>' : 'Gold: <span class="text-danger">Belum</span>'. ' <br>';
-                $nestedData['status_kirim'] .= $member->status_kirim_billing_silver == 1 ? 'Silver: <span class="text-succes">Sudah</span>' : 'Silver: <span class="text-danger">Belum</span>'. ' <br>';
-                $nestedData['status_kirim'] .= $member->status_kirim_billing_bronze == 1 ? 'Bronze: <span class="text-succes">Sudah</span>' : 'Bronze: <span class="text-danger">Belum</span>'. ' <br>';
-                $nestedData['status_kirim'] .= $member->status_kirim_billing_early == 1 ? 'Early: <span class="text-succes">Sudah</span>' : 'Early: <span class="text-danger">Belum</span>'. ' <br>';
+                $nestedData['status_kirim'] = $member->status_kirim_billing_gold == 1 ? 'Gold: <span class="text-succes">Sudah</span> <br>' : 'Gold: <span class="text-danger">Belum</span><br>';
+                $nestedData['status_kirim'] .= $member->status_kirim_billing_silver == 1 ? 'Silver: <span class="text-succes">Sudah</span><br>' : 'Silver: <span class="text-danger">Belum</span><br>';
+                $nestedData['status_kirim'] .= $member->status_kirim_billing_bronze == 1 ? 'Bronze: <span class="text-succes">Sudah</span><br>' : 'Bronze: <span class="text-danger">Belum</span><br>';
+                $nestedData['status_kirim'] .= $member->status_kirim_billing_early == 1 ? 'Early: <span class="text-succes">Sudah</span>' : 'Early: <span class="text-danger">Belum</span>';
 
                 $nestedData['action'] = '
                 <a href="javascript:void(0)" class="badge badge-success p-2" onclick="kirimBilling(`'.$member->id.'`)"  data-toggle="modal" data-target="#modalKirimTagihan">Kirim Tagihan</a>';
