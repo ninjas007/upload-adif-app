@@ -31,6 +31,6 @@ class KirimTagihan extends Mailable
         $data = $this->data;
 
         return $this->subject('Notification Billing')
-                    ->view('emails.kirim-tagihan', ['data' => $data]);
+                    ->view('emails.kirim-tagihan', $data);
     }
 }

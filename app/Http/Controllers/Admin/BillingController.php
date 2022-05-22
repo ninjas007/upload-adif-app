@@ -148,9 +148,9 @@ class BillingController extends Controller
     {
         $return = true;
         try {
-            $kirim_email = Mail::to($user->email)->send(new KirimTagihan($user));
+            $kirim_email = Mail::to($user->email)->send(new KirimTagihan(['user' => $user]));
         } catch (\Exception $e) {
-            // dd($e->getMessage());
+            if(config('app.debug')) dd($e->getMessage());
             $return = false;
         }
 
