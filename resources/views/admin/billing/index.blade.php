@@ -126,7 +126,7 @@
                     swal({
                         title: title,
                         text: data.message,
-                        icon: icon,
+                        icon: type,
                         button: "Ok",
                     }).then(() => {
                         location.reload();
