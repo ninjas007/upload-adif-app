@@ -80,6 +80,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/Javascript">$(function() {
             $.noConflict();
             // $('#myTable').DataTable();
@@ -113,8 +114,33 @@
             $.ajax({
                 url: `{{ url('admin/billing/kirim-tagihan') }}?user_id=${id_member}&award_class=${award_class}`,
                 dataType: 'json',
-                success: function(response) {
-                    console.log(response);
+                success: function(data){
+                    if(data.status_code == 200) {
+                        title = 'Berhasil';
+                        type = 'success';
+                    } else {
+                        title = 'Gagal';
+                        type = 'error';
+                    }
+
+                    swal({
+                        title: title,
+                        text: data.message,
+                        icon: icon,
+                        button: "Ok",
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function(err) {
+                    swal({
+                        title: 'Gagal',
+                        text: 'Billing gagal dikirim, silahkan hubungi admin',
+                        icon: 'error',
+                        button: "Ok",
+                    }).then(() => {
+                        location.reload();
+                    });
                 }
             })
         }</script>
