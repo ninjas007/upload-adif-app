@@ -60,12 +60,15 @@
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/awards') }}">Awards</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/members') }}">Members</a></li>
                                 @if (Auth::user()->manager == 0 && Auth::user()->role == 0)
-                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/banners') }}">Banner</a></li>
-                                <!--<li class="nav-item"><a class="nav-link" href="{{ route('admin/rules') }}">Rules</a></li>-->
-                                <li class="nav-item"><a class="nav-link" href="{{ route('admin/listAdmin') }}">Administrator</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin/banners') }}">Banner</a></li>
+                                    <!--<li class="nav-item"><a class="nav-link" href="{{ route('admin/rules') }}">Rules</a></li>-->
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin/listAdmin') }}">Administrator</a></li>
                                 @endif
                                 <li class="nav-item"><a class="nav-link" href="{{ route('admin/setting') }}">Setting</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ url('/admin/billing') }}">Billing</a></li>
+
+                                @if (in_array('billing', \Auth::user()->getArrayAkses()))
+                                    <li class="nav-item"><a class="nav-link" href="{{ url('/admin/billing') }}">Billing</a></li>
+                                @endif
                             </li>
                             @endcan
                         @endguest

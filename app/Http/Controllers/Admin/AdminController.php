@@ -67,15 +67,16 @@ class AdminController extends Controller
 
             $user->save();
 
-            // cek jika sudah ada hak akses di user ini
-            $hak_akses = HakAkses::where('user_id', $request->user_id)->get();
-            foreach($request->menu as $menu => $fitur) {
-                if(count($hak_akses) <= 0) {
-                    $hak_akses = new HakAkses;
-                } else {
-                    $hak_akses = HakAkses::where('menu', $menu)->where('user_id', $request->user_id)->first();
-                }
+            // hapus yang lama
+            $hak_akses = HakAkses::where('user_id', $request->user_id)->delete();
 
+            // dd($request->menu);
+            // buat yang baru
+            foreach($request->menu as $menu => $fitur) {
+                if($menu == 'billing' && $fitur['akses_billing'] == 0) {
+                    continue;
+                }
+                $hak_akses = new HakAkses;
                 $hak_akses->user_id = $request->user_id;
                 $hak_akses->menu = $menu;
                 $hak_akses->fitur_akses = json_encode($fitur);

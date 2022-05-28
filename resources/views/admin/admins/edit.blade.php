@@ -59,23 +59,17 @@
                                     <div class="col-md-6">
                                         <table style="width: 100%" border="1">
                                             <tr>
-                                                <td rowspan="2" align="center">Menu</td>
+                                                <td align="center">Menu</td>
                                                 <td colspan="3" align="center">Action</td>
                                             </tr>
-                                            <tr>
-                                                <td>Award</td>
-                                                <td>Update</td>
-                                                <td>Delete</td>
-                                            </tr
-                                            @if(count($fitur_akses) <= 0)
-                                                <tr>
-                                                    <td align="center">Members <input type="hidden" name="menu[members]" value="members"></td>
-                                                    <td><input type="checkbox" style="line-height: 0" name="menu[members][award]"></td>
-                                                    <td><input type="checkbox" style="line-height: 0" name="menu[members][update]"></td>
-                                                    <td><input type="checkbox" style="line-height: 0" name="menu[members][delete]"></td>
-                                                </tr>
-                                            @else
+                                            @php
+                                                $menus = [];
+                                            @endphp
+                                            @if(count($fitur_akses) > 0)
                                                 @foreach($fitur_akses as $menu => $fitur)
+                                                    @php
+                                                        $menus[] = $fitur->menu;
+                                                    @endphp
                                                     @if($fitur->menu == 'members')
                                                         <tr>
                                                             <td align="center">
@@ -85,25 +79,67 @@
                                                                 $fitur_akses = json_decode($fitur->fitur_akses);
                                                             @endphp
                                                             @if(isset($fitur_akses->award))
-                                                                <td><input type="checkbox" style="line-height: 0" name="menu[members][award]" checked></td>
+                                                                <td> Award <br> <input type="checkbox" style="line-height: 0" name="menu[members][award]" checked></td>
                                                             @else
-                                                                <td><input type="checkbox" style="line-height: 0" name="menu[members][award]"></td>
+                                                                <td> Award <br> <input type="checkbox" style="line-height: 0" name="menu[members][award]"></td>
                                                             @endif
 
                                                             @if(isset($fitur_akses->update))
-                                                                <td><input type="checkbox" style="line-height: 0" name="menu[members][update]" checked></td>
+                                                                <td>Update <br> <input type="checkbox" style="line-height: 0" name="menu[members][update]" checked></td>
                                                             @else
-                                                                <td><input type="checkbox" style="line-height: 0" name="menu[members][update]"></td>
+                                                                <td>Update <br><input type="checkbox" style="line-height: 0" name="menu[members][update]"></td>
                                                             @endif
 
                                                             @if(isset($fitur_akses->delete))
-                                                                <td><input type="checkbox" style="line-height: 0" name="menu[members][delete]" checked></td>
+                                                                <td>Delete <br> <input type="checkbox" style="line-height: 0" name="menu[members][delete]" checked></td>
                                                             @else
-                                                                <td><input type="checkbox" style="line-height: 0" name="menu[members][delete]"></td>
+                                                                <td>Delete <br> <input type="checkbox" style="line-height: 0" name="menu[members][delete]"></td>
+                                                            @endif
+                                                        </tr>
+                                                    @endif
+                                                    @if($fitur->menu == 'billing')
+                                                        <tr>
+                                                            <td align="center">
+                                                                BILLING <input type="hidden" name="menu[{{ $fitur->menu }}]">
+                                                            </td>
+                                                            @php
+                                                                $fitur_akses = json_decode($fitur->fitur_akses);
+                                                            @endphp
+                                                            @if(isset($fitur_akses->akses_billing))
+                                                                <td colspan="3">
+                                                                    <select name="menu[billing][akses_billing]" class="form-control">
+                                                                        <option value="0" {{ (isset($fitur_akses->akses_billing) && $fitur_akses->akses_billing == 0) ? 'selected' : '' }}>Batasi Akses</option>
+                                                                        <option value="1" {{ (isset($fitur_akses->akses_billing) && $fitur_akses->akses_billing == 1) ? 'selected' : '' }}>Beri Akses</option>
+                                                                    </select>
+                                                                </td>
                                                             @endif
                                                         </tr>
                                                     @endif
                                                 @endforeach
+                                            @endif
+                                            {{-- kalau belum ada menu members di setiap user --}}
+                                            @if(in_array('members', $menus) == false)
+                                                <tr>
+                                                    <td align="center">
+                                                        MEMBERS <input type="hidden" name="menu[members]">
+                                                    </td>
+                                                    <td>Award <br> <input type="checkbox" style="line-height: 0" name="menu[members][award]"></td>
+                                                    <td>Update <br> <input type="checkbox" style="line-height: 0" name="menu[members][update]"></td>
+                                                    <td>Delete <br> <input type="checkbox" style="line-height: 0" name="menu[members][delete]"></td>
+                                                </tr>
+                                            @endif
+                                            @if(in_array('billing', $menus) == false)
+                                                <tr>
+                                                    <td align="center">
+                                                        BILLING <input type="hidden" name="menu[billing]">
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <select name="menu[billing][akses_billing]" class="form-control">
+                                                            <option value="0">Batasi Akses</option>
+                                                            <option value="1">Beri Akses</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
                                             @endif
                                         </table>
                                     </div>

@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\KirimTagihan;
-
+use App\HakAkses;
+use Auth;
 class BillingController extends Controller
 {
     public function index(Request $request)
     {
+        $user_id = Auth::user()->id;
+        $hak_akses = HakAkses::where('user_id', $user_id)->where('menu', 'billing')->first();
+
+        if(!$hak_akses) {
+            echo 'Tidak ada akses kesini';
+            die;
+        }
+
         return view('admin.billing.index');
     }
 
