@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class KirimTagihan extends Mailable
+class TwoMonthNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class KirimTagihan extends Mailable
     {
         $data = $this->data;
 
-        return $this->subject('YB6DXCommunity - Notification Billing')
-                    ->view('emails.kirim-tagihan', $data);
+        return $this->subject('YB6DXCommunity - Notification Two Month Before Expired '.$data['callsign'].'')
+                    ->view('emails.two-month', compact('data'));
     }
 }

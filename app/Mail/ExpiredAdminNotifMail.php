@@ -30,7 +30,7 @@ class ExpiredAdminNotifMail extends Mailable
     {
         $data = $this->data;
 
-        return $this->subject('Info Users Expired')
+        return $this->subject('YB6DXCommunity - Info Users Expired')
                     ->view('emails.notif_expired_admin', compact('data'));
     }
 }

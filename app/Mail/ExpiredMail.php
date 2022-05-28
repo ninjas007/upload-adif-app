@@ -30,7 +30,7 @@ class ExpiredMail extends Mailable
     {
         $data = $this->data;
 
-        return $this->subject('Expired Account Member '.$data['callsign'].'')
+        return $this->subject('YB6DXCommunity - Expired Account Member '.$data['callsign'].'')
                     ->view('emails.expired', compact('data'));
     }
 }

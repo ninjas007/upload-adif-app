@@ -115,7 +115,7 @@ class WelcomeController extends Controller
 
     public function jsonDetailMember(Request $request)
     {
-        $member = User::where('callsign', $request->get('callsign'))->with('userAwards')->get();
+        $member = User::where('callsign', $request->get('callsign'))->where('is_active', 1)->with('userAwards')->get();
 
         $data['member'] = [
             'name' => $member[0]->name,
