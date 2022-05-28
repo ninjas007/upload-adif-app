@@ -1,6 +1,6 @@
 @extends('welcome.layout')
 @section('content')
-<p style="font-size: 20px" class="text-center border p-1">Awards</p>
+<p style="font-size: 20px;" class="text-center border p-1 text-white bg-info">Awards</p>
 <div class="row">
     @foreach ($awards as $award)
     <div class="col-md-4 mb-3">

@@ -26,6 +26,7 @@
                             <tr>
                                 <th>Nama banner</th>
                                 <th>Image</th>
+                                <th>Aktif</th>
                                 <th>Update</th>
                             </tr>
                         </thead>
@@ -39,8 +40,9 @@
                                 <td>
                                     <a href="{{ $banner->url_image }}" target="_blank"><img src="{{ $banner->url_image }}" width="100"></a>
                                 </td>
+                                <td>{{ $banner->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
                                 <td>
-                                    <a href="/admin/banner/edit/{{ $banner->id }}" class="btn btn-primary btn-sm modal-update">Edit</a>
+                                    <a href="{{ url('/admin/banner/edit') .'/'. $banner->id }}" class="btn btn-primary btn-sm modal-update">Edit</a>
                                 </td>
                             </tr>
                             @endforeach

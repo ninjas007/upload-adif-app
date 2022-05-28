@@ -16,7 +16,7 @@ class BannerController extends Controller
             die;
         }
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,7 @@ class BannerController extends Controller
     public function index()
     {
         $this->checkAdmin();
-        
+
         $data['banners'] = Banner::all();
 
         return view('admin.banner.index', $data);
@@ -57,7 +57,7 @@ class BannerController extends Controller
     public function edit($id)
     {
         $this->checkAdmin();
-        
+
         $data['banner'] = Banner::findOrFail($id);
 
         return view('admin.banner.edit', $data);

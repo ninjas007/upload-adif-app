@@ -25,6 +25,11 @@
           overflow: visible;
           background: #fff url('/preloader.gif') no-repeat center center;
         }
+
+        .list-item-front li:hover {
+            background-color: #f1f1f1;
+        }
+
         </style>
 <div id="google_translate_element"></div>
 <script type="text/javascript">
@@ -32,7 +37,7 @@ function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
 }
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>      
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     </head>
     <body>
         <div id="preloader"></div>
@@ -42,9 +47,11 @@ function googleTranslateElementInit() {
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($banners as $key => $banner)
-                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                    <img src="{{ $banner->url_image }}" alt="{{ $banner->name }}" style="max-height: 400px; max-width: 100%;">
-                                </div>    
+                                @if($banner->is_active == 1)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <img src="{{ $banner->url_image }}" alt="{{ $banner->name }}" style="max-height: 400px; max-width: 100%;">
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -61,7 +68,7 @@ function googleTranslateElementInit() {
             <div class="row">
                 <div class="col-md-3">
                     <p style="font-size: 20px" class="text-center border p-1"><a href="">YB6_DXCommunity</a></p>
-                    <ul class="list-group">
+                    <ul class="list-group list-item-front">
                         @if (Route::has('login'))
                         @auth
                         <li class="list-group-item py-2">
@@ -87,12 +94,12 @@ function googleTranslateElementInit() {
                         @endauth
                         @endif
                         <li class="list-group-item py-2">
-                            <a href="/list-member">Members</a>
-			<li class="list-group-item py-2">
+                            <a href="{{ url('/list-member') }}">Members</a>
+			            <li class="list-group-item py-2">
                             <a href="https://yb6-dxc.net/managers/" target="">Manager</a>
                         </li>
                         <li class="list-group-item py-2">
-                            <a href="/list-award">Awards</a>
+                            <a href="{{ url('/list-award') }}">Awards</a>
                         </li>
                         <li class="list-group-item py-2">
                             <a href="https://yb6-dxc.net/released-award-list/" target="">Released Award List</a>
@@ -106,8 +113,15 @@ function googleTranslateElementInit() {
                             {{-- {{ date('d-m-Y') }} <br> --}}
                             {{-- <span id="jam"></span>:<span id="menit"></span>:<span id="detik"></span> --}}
                             <div style="text-align:center;padding:1em 0;"><h4>Server Time</h4> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta" width="100%" height="90" frameborder="0" seamless></iframe> </div>
-                        </div>		
+                        </div>
                     </div>
+                    @if($banner_sidebar->is_active == 1)
+                        <div class="card text-center my-3">
+                            <div class="border">
+                                <img src="{{ $banner_sidebar->url_image }}" alt="gambar" width="100%" style="height: 185px">
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-md-9">
                     @yield('content')
@@ -127,7 +141,7 @@ function googleTranslateElementInit() {
         @yield('js')
         <script type="text/javascript">
             // window.setTimeout("waktu()", 1000);
-         
+
             // function waktu() {
             //     var waktu = new Date();
             //     setTimeout("waktu()", 1000);

@@ -25,7 +25,11 @@
                                     <option value="0" selected>Tidak Aktif</option>
                                     @endif
                                 </select>
-                                <div class="text-danger mt-2">Ukuran gambar yang diambil dari url baiknya 1170 x 450</div>
+                                @if($banner->category == 'banner-depan')
+                                    <div class="text-danger mt-2">Ukuran gambar yang diambil dari url baiknya lebar 1170 x tinggi 450</div>
+                                @elseif($banner->category == 'banner-sidebar')
+                                    <div class="text-danger mt-2">Ukuran gambar yang diambil dari url baiknya lebar 234 x tinggi 185</div>
+                                @endif
                             </div>
                             <div class="col-md-6">
                                 <img src="{{ $banner->url_image }}" class="img-fluid">

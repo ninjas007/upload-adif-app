@@ -15,7 +15,8 @@ class WelcomeController extends Controller
     public function index()
     {
         $data['awards'] = Award::paginate(6);
-        $data['banners'] = Banner::all();
+        $data['banners'] = Banner::where('category', 'banner-depan')->get();
+        $data['banner_sidebar'] = Banner::where('category', 'banner-sidebar')->first();
 
         return view('welcome.awards', $data);
     }
@@ -24,20 +25,20 @@ class WelcomeController extends Controller
     {
 
         $columns = [
-            'name', 'category', 'callsign', 'register'            
+            'name', 'category', 'callsign', 'register'
         ];
-  
+
         $totalData = User::where('role', 1)->count();
-            
-        $totalFiltered = $totalData; 
+
+        $totalFiltered = $totalData;
 
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
-            
+
         if(empty($request->input('search.value')))
-        {            
+        {
             $members = User::offset($start)
                          ->limit($limit)
                          ->orderBy('id')
@@ -45,7 +46,7 @@ class WelcomeController extends Controller
                          ->get();
         }
         else {
-            $search = $request->input('search.value'); 
+            $search = $request->input('search.value');
 
             $members =  User::where('id','LIKE',"%{$search}%")
                             ->orWhere('name', 'LIKE',"%{$search}%")
@@ -76,7 +77,7 @@ class WelcomeController extends Controller
                     } else if ($member->category == 'free') {
                         $nestedData['name'] = '<a href="#" class="detail" data-memberid="BSC#'.substr($member->member_id, -3).'" data-callsign='.$member->callsign.'>'.$member->name.'</a>';
                     }
-                    
+
                     $nestedData['category'] = ucfirst($member->category);
                     $nestedData['callsign'] = $member->callsign;
                     $nestedData['register'] = ($member->register == null) ? '-' : $member->register;
@@ -92,22 +93,23 @@ class WelcomeController extends Controller
                 }
             }
         }
-          
+
         $json_data = array(
-                    "draw"            => intval($request->input('draw')),  
-                    "recordsTotal"    => intval($totalData),  
-                    "recordsFiltered" => intval($totalFiltered), 
-                    "data"            => $data   
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
                     );
-            
+
         return response()->json($json_data);
     }
 
     public function members()
     {
 
-        $data['banners'] = Banner::all();
-        
+        $data['banners'] = Banner::where('category', 'banner-depan')->get();
+        $data['banner_sidebar'] = Banner::where('category', 'banner-sidebar')->first();
+
         return view('welcome.members', $data);
     }
 

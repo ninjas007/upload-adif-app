@@ -1,6 +1,6 @@
 @extends('welcome.layout')
 @section('content')
-<p style="font-size: 20px" class="text-center border p-1">Members</p>
+<p style="font-size: 20px;" class="text-center border p-1 text-white bg-info">Members</p>
 <div class="row">
     <div class="col-12">
         <div class="form-group mt-5">
@@ -11,7 +11,7 @@
         <button type="button" class="btn btn-primary" id="submit">Submit</button>
     </div>
     <div class="col-12" id="content">
-        
+
     </div>
 </div>
 
@@ -27,7 +27,7 @@
             if (callsign == "") {
                 return alert('please input callsign')
             }
-            
+
             $.ajax({
                 url: '/detailMember',
                 dataType: 'json',
@@ -36,7 +36,7 @@
                      member = response.member
 
                      html = ``;
-                     
+
                      if (response.total_records > 0) {
                          $.each(response.records, function(index, award) {
                              html += `<tr>
@@ -76,11 +76,11 @@
                             <td style="vertical-align: middle;">${member.register}</td>
                         </tr>
                         `+memberExpired(member.category, member.life_time, member.expired)+`
-                       
-                         ${member.category == 'Premium' 
+
+                         ${member.category == 'Premium'
                          ? `<tr><td style="vertical-align: middle;" class="text-info font-weight-bold" colspan="3">
                                 ${member.class_premium}
-                            </td></tr>` 
+                            </td></tr>`
                          : ''}
                          <tr><td style="vertical-align: middle;" colspan="3">`+memberAlamat(member.alamat)+`</td></tr>
                      </table>
@@ -140,7 +140,7 @@
                             <td style="vertical-align: middle;">-</td>
                         </tr>`;
                 }
-                
+
             }
         });
     });
