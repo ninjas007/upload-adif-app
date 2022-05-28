@@ -31,8 +31,6 @@ class CronJobController extends Controller
             // artinya dia expired
             if ($date == date('Y-m-d')) {
 
-                $data['expired'] = true;
-
                 \Mail::to($user->email)->send(new \App\Mail\ExpiredMail($data));
                 $return['users'][] = [
                     'name' => $user->name,
