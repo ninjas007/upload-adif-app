@@ -115,7 +115,7 @@ function googleTranslateElementInit() {
                             <div style="text-align:center;padding:1em 0;"><h4>Server Time</h4> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=small&timezone=Asia%2FJakarta" width="100%" height="90" frameborder="0" seamless></iframe> </div>
                         </div>
                     </div>
-                    @if($banner_sidebar->is_active == 1)
+                    @if(!empty($banner_sidebar) && $banner_sidebar->is_active == 1)
                         <div class="card text-center my-3">
                             <div class="border">
                                 <img src="{{ $banner_sidebar->url_image }}" alt="gambar" width="100%" style="height: 185px">
