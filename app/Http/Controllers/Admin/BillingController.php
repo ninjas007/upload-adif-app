@@ -86,7 +86,7 @@ class BillingController extends Controller
                     $nestedData['member'] .= '<div class="font-weight-bold">Class Premium : '.ucfirst($member->class_premium).'</div>';
                 }
 
-                $nestedData['keterangan'] = 'Keterangan';
+                // $nestedData['keterangan'] = 'Keterangan';
                 // award class option
                 $nestedData['award_class'] = '<select class="form-control award-class-'.$member->id.'">
                                                     <option value="gold class">Gold Class</option>
@@ -95,12 +95,23 @@ class BillingController extends Controller
                                                     <option value="early class">Early Class</option>
                                             </select>';
 
+                // status kirim tagihan member baru
                 $nestedData['status_kirim'] = $member->status_kirim_billing_gold == 1 ? 'Gold: <span class="text-success">Sudah</span> <br>' : 'Gold: <span class="text-danger">Belum</span><br>';
                 $nestedData['status_kirim'] .= $member->status_kirim_billing_silver == 1 ? 'Silver: <span class="text-success">Sudah</span><br>' : 'Silver: <span class="text-danger">Belum</span><br>';
                 $nestedData['status_kirim'] .= $member->status_kirim_billing_bronze == 1 ? 'Bronze: <span class="text-success">Sudah</span><br>' : 'Bronze: <span class="text-danger">Belum</span><br>';
                 $nestedData['status_kirim'] .= $member->status_kirim_billing_early == 1 ? 'Early: <span class="text-success">Sudah</span>' : 'Early: <span class="text-danger">Belum</span>';
 
-                $nestedData['action'] = '
+                // status kirim perpanjangan
+                $nestedData['status_kirim2'] = $member->status_kirim_billing_gold == 1 ? 'Gold: <span class="text-success">Sudah</span> <br>' : 'Gold: <span class="text-danger">Belum</span><br>';
+                $nestedData['status_kirim2'] .= $member->status_kirim_billing_silver == 1 ? 'Silver: <span class="text-success">Sudah</span><br>' : 'Silver: <span class="text-danger">Belum</span><br>';
+                $nestedData['status_kirim2'] .= $member->status_kirim_billing_bronze == 1 ? 'Bronze: <span class="text-success">Sudah</span><br>' : 'Bronze: <span class="text-danger">Belum</span><br>';
+                $nestedData['status_kirim2'] .= $member->status_kirim_billing_early == 1 ? 'Early: <span class="text-success">Sudah</span>' : 'Early: <span class="text-danger">Belum</span>';
+
+
+                $nestedData['member_baru'] = '
+                <a href="javascript:void(0)" class="badge badge-success p-2" onclick="kirimBilling(`'.$member->id.'`)"  data-toggle="modal" data-target="#modalKirimTagihan">Kirim Tagihan</a>';
+
+                $nestedData['member_perpanjang'] = '
                 <a href="javascript:void(0)" class="badge badge-success p-2" onclick="kirimBilling(`'.$member->id.'`)"  data-toggle="modal" data-target="#modalKirimTagihan">Kirim Tagihan</a>';
 
                 $data[] = $nestedData;

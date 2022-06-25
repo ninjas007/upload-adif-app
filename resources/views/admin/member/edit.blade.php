@@ -14,7 +14,7 @@
                         @csrf
                         <input type="hidden" name="id" value="{{ $user->id }}">
                         <div class="row">
-                            <div class="col-md-12 pt-md-4">                                
+                            <div class="col-md-12 pt-md-4">
                                 @if ($errors->any())
                                     @foreach ($errors->all() as $error)
                                         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -89,10 +89,10 @@
                                     <label for="password">Password</label>
                                     <input type="text" class="form-control" name="password" id="password" placeholder="Password">
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="certificate">Certificate Member</label>
                                     <input type="text" class="form-control" name="certificate" id="certificate" placeholder="link google drive" value="{{ $user->certificate }}">
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary float-right" value="Submit">
                                 </div>

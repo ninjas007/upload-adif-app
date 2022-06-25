@@ -32,12 +32,14 @@
                             <table class="table table-bordered" id="myTable" style="font-size: 12px;">
                                 <thead>
                                     <tr>
-                                        <th width="180">Member</th>
+                                        <th width="30%">Member</th>
                                         {{-- nanti keteragnan isinya setiap member punya beberapa award class,, dan keterangan notifikasi sudah terkirim atau belum tagihannya --}}
-                                        <th>Keterangan</th>
-                                        <th width="180">Award Class</th>
-                                        <th width="80">Status Kirim</th>
-                                        <th style="text-align: center;" width="80">Action</th>
+                                        {{-- <th>Keterangan</th> --}}
+                                        <th width="30%">Award Class</th>
+                                        <th width="20%">Status Kirim Tagihan Member Baru</th>
+                                        <th width="20%">Status Kirim Tagihan Member Baru</th>
+                                        <th style="text-align: center;">Tagihan Member Baru</th>
+                                        <th style="text-align: center;">Tagihan Perpanjangan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,14 +96,19 @@
                        },
                 "columns": [
                     { "data": "member" },
-                    { "data": "keterangan" },
                     { "data": "award_class" },
                     { "data": "status_kirim" },
-                    { "data": "action" },
+                    { "data": "status_kirim2" },
+                    { "data": "member_baru" },
+                    { "data": "member_perpanjang" },
                 ],
                 "columnDefs" : [
                     {
                         "targets": -1,
+                        "className": 'text-center'
+                    },
+                    {
+                        "targets": -2,
                         "className": 'text-center'
                     }
                 ]
