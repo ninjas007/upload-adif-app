@@ -117,8 +117,6 @@
                     icon = 'error';
                 }
 
-                return
-
                 swal({
                     title: title,
                     text: data.message,

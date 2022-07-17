@@ -14,6 +14,6 @@ class MemberController extends Controller
 
         $user = User::where('callsign', $callsign)->where('password', $password)->first();
 
-        return view('certificate', compact('user'));
+        return view('admin.member.certificate', compact('user'));
     }
 }
