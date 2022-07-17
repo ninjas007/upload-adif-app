@@ -12,8 +12,8 @@ class MemberController extends Controller
         $password = base64_decode($request->token);
         $callsign = $request->callsign;
 
-        $user = User::where('callsign', $callsign)->where('password', $password)->first();
+        $member = User::where('callsign', $callsign)->where('password', $password)->first();
 
-        return view('admin.member.certificate', compact('user'));
+        return view('admin.member.certificate', compact('member'));
     }
 }
