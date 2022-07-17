@@ -110,10 +110,14 @@
                 if(data.status_code == 200) {
                     title = 'Berhasil';
                     type = 'success';
+                    icon = 'success';
                 } else {
                     title = 'Gagal';
                     type = 'error';
+                    icon = 'error';
                 }
+
+                return
 
                 swal({
                     title: title,
